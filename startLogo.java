@@ -49,9 +49,10 @@ public class startLogo {
 			@Override
 			public void run()
 			{
-				frame.dispose();
+				
 				Authenticate lobj = new Authenticate();
 				lobj.main(null);
+				frame.dispose();
 			}
 		}, 3200);
 		
@@ -61,8 +62,8 @@ public class startLogo {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Reetik\\Desktop\\emuds2.png"));
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\emuds2.png"));
 		lblNewLabel.setBounds(0, 0, 500, 500);
 		frame.getContentPane().add(lblNewLabel);
 	

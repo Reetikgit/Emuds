@@ -1,5 +1,4 @@
 import java.awt.EventQueue;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -7,9 +6,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -59,13 +58,18 @@ import org.jdatepicker.impl.UtilDateModel;
 //import CalendarProgram.cmbYear_Action;
 //import CalendarProgram.tblCalendarRenderer;
 
+
+
 import java.awt.Component;
 import java.awt.Container;
+
 import javax.swing.event.*;
 import javax.swing.table.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+
 import javax.swing.JSeparator;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JInternalFrame;
@@ -89,7 +93,6 @@ public class teachDashNew {
 	private JTextField tname;
 	private JTextField tusn;
 	private JTextField tclassid;
-	private JTextField tdate;
 	private JTextField txtDobDd;
 	private JTextField txtDobMm;
 	private JTextField txtDobYy;
@@ -122,7 +125,6 @@ public class teachDashNew {
 	private JPasswordField newPasswordf;
 	private JTextField txtteacherid;
 	private JTextField txttname;
-	private JTextField txttdateofjoin;
 	private JTextField txttclassid;
 	private JTextField txtD;
 	private JTextField txtM;
@@ -227,7 +229,7 @@ public class teachDashNew {
 
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(new Color(255, 255, 255));
-		desktopPane.setBounds(82, 51, 906, 367);
+		desktopPane.setBounds(82, 87, 906, 367);
 		profilePanel.add(desktopPane);
 
 		JLabel subjectlbl = new JLabel("Subject:");
@@ -261,9 +263,9 @@ public class teachDashNew {
 		sunjectlbl.setFont(new Font("Tahoma", Font.PLAIN, 21));
 
 		JLabel lblEmailDb = new JLabel(teacheremail);
-		lblEmailDb.setBounds(605, 218, 223, 45);
+		lblEmailDb.setBounds(547, 218, 323, 45);
 		desktopPane.add(lblEmailDb);
-		lblEmailDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblEmailDb.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JLabel lblPhoneDb = new JLabel(teacherphone);
 		lblPhoneDb.setBounds(609, 162, 219, 45);
@@ -324,15 +326,26 @@ public class teachDashNew {
 		lblName.setBounds(22, 32, 87, 51);
 		desktopPane.add(lblName);
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		if(!(desig.equalsIgnoreCase("HOD")))
+		{
+			JLabel lblNameDb = new JLabel("Prof."+""+teachername);	
+			lblNameDb.setBounds(185, 38, 212, 45);
+			desktopPane.add(lblNameDb);
+			lblNameDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		}
+		else
+		{
+			JLabel lblNameDb = new JLabel("Dr."+""+teachername);	
+			lblNameDb.setBounds(185, 38, 212, 45);
+			desktopPane.add(lblNameDb);
+			lblNameDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		}
 
-		JLabel lblNameDb = new JLabel(teachername);
-		lblNameDb.setBounds(185, 38, 212, 45);
-		desktopPane.add(lblNameDb);
-		lblNameDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+
 
 		JLabel lblEmudsprofile = new JLabel("EMUDS-Profile");
-		lblEmudsprofile.setFont(new Font("Poor Richard", Font.PLAIN, 25));
-		lblEmudsprofile.setBounds(10, 9, 239, 31);
+		lblEmudsprofile.setFont(new Font("Poor Richard", Font.PLAIN, 30));
+		lblEmudsprofile.setBounds(10, 9, 358, 47);
 		profilePanel.add(lblEmudsprofile);
 
 		JPanel newSPan = new JPanel();
@@ -364,14 +377,32 @@ public class teachDashNew {
 		newSPan.add(scroll2);
 
 		table_1 = new JTable(model3);
+	
+	
 		// scroll2.setColumnHeaderView(table_1);
 
 		JButton btnNewButton_3 = new JButton("Pick");
 		btnNewButton_3.setBackground(new Color(102, 51, 255));
 		btnNewButton_3.setFont(new Font("Sylfaen", Font.BOLD, 14));
 		btnNewButton_3.setBounds(723, 387, 89, 35);
+		JComboBox comboJoinYear = new JComboBox();
+		comboJoinYear.setModel(new DefaultComboBoxModel(new String[] {"2015", "2016", "2017", "2018"}));
+		comboJoinYear.setBounds(107, 109, 172, 20);
+		
+		comboJoinYear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				if(branchf.getText().equals("CIVIL"))
+				{
+					tusn.setText("1VA"+comboJoinYear.getSelectedItem().toString().substring(2)+branchf.getText().substring(0,1)+branchf.getText().substring(2,3)+"0");
+				}
+				else
+				tusn.setText("1VA"+comboJoinYear.getSelectedItem().toString().substring(2)+branchf.getText().substring(0,2)+"0");
+			}
+		});
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				comboJoinYear.setEnabled(false);
 				count = 0;
 				int column = 0;
 				int row = table_1.getSelectedRow();
@@ -395,12 +426,12 @@ public class teachDashNew {
 						//
 						String[] DobDb = rs.getString(7).split("/");
 						tusn.setText(rs.getString(1));
-					
+
 						tproctor.setText(rs.getString(6));
 						txtphonef.setText(rs.getString(8));
 						txtemailf.setText(rs.getString(9));
 						tname.setText(rs.getString(2));
-						tdate.setText(rs.getString(3));
+						comboJoinYear.setSelectedItem(rs.getString(2));
 						txtDobDd.setText(DobDb[0]);
 						txtDobMm.setText(DobDb[1]);
 						txtDobYy.setText(DobDb[2]);
@@ -416,46 +447,55 @@ public class teachDashNew {
 		newSPan.add(btnNewButton_3);
 		JComboBox comboBox_4 = new JComboBox();
 		comboBox_4.setToolTipText("Select");
-		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(453, 109, 114, 20);
+
+		comboBox.setToolTipText("Select");
 		if(teacherbranchid.equals("CSE"))
 		{
 			comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"17CS"}));
+			comboBox.setModel(new DefaultComboBoxModel(new String[] { "17CS"}));
 		}
-		if(teacherbranchid.equals("ISE"))
+		else if(teacherbranchid.equals("ISE"))
 		{
 			comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"17IS"}));
+			comboBox.setModel(new DefaultComboBoxModel(new String[] { "17CS"}));
 		}
 		else
+		{
 			comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"17CIV"}));
-		comboBox_4.setBounds(117, 217, 172, 20);
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(463, 154, 114, 20);
-
-		comboBox.setToolTipText("Select");
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "17CS", "17ME", "17CIV", "17EE" }));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "17CIV" }));
+		}
+		comboBox_4.setBounds(106, 297, 172, 23);
+		
+		
 
 		JButton btnNewButton_5 = new JButton("Update");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
+				
 				if (count > 0) {
 					int inputt = JOptionPane.showConfirmDialog(null, "Confirm your update");
 					if (inputt == 0) {
-
+						
 						try {
 							Class.forName("com.mysql.jdbc.Driver");
 							System.out.println("Driver loaded successfully");
 							Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root",
 									"");
 							Statement stmt = con.createStatement();
-							ResultSet rs = stmt.executeQuery("select * from student");
-
+							ResultSet rs = stmt.executeQuery("{call proc1()}");
+							while(rs.next())
+							{
+								System.out.println("Stored Proc"+rs.getString(1));
+								}
 							String query = "update student set USN=?,Name=?,Year=?,Branch_id=?,Class_id=?,teacher_id=?,DOB=?,Phone_NO=?,Email=?,Subject_id=?,Marks_id=?,Password=? where USN='"
 									+ tusn.getText() + "'";
 							PreparedStatement ps = con.prepareStatement(query);
 							ps.setString(1, tusn.getText());
 							ps.setString(2, tname.getText());
-							ps.setString(3, tdate.getText());
+							ps.setString(3, comboJoinYear.getSelectedItem().toString());
 							ps.setString(4, branchf.getText());
 							ps.setString(5, comboBox_4.getSelectedItem().toString());
 							ps.setString(6, tproctor.getText());
@@ -485,7 +525,7 @@ public class teachDashNew {
 							txtphonef.setText("");
 							txtemailf.setText("");
 							tname.setText("");
-							tdate.setText("");
+							
 							txtDobDd.setText("");
 							txtDobMm.setText("");
 							txtDobYy.setText("");
@@ -509,72 +549,6 @@ public class teachDashNew {
 		btnNewButton_5.setFont(new Font("Sylfaen", Font.BOLD, 14));
 		btnNewButton_5.setBounds(843, 387, 89, 35);
 		newSPan.add(btnNewButton_5);
-
-		JButton btnNewButton_6 = new JButton("Delete");
-		btnNewButton_6.setEnabled(false);
-		btnNewButton_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (count > 0) {
-
-					int inputt = JOptionPane.showConfirmDialog(null,
-							"Do you really want to Remove data for " + tname.getText());
-					if (inputt == 0) {
-
-						try {
-							Class.forName("com.mysql.jdbc.Driver");
-							System.out.println("Driver loaded successfully");
-							Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root",
-									"");
-							Statement stmt = con.createStatement();
-
-							String query = "delete from student where USN='" + tusn.getText() + "'";
-							String query2 = "delete from marks where USN='" + tusn.getText() + "'";
-							PreparedStatement ps = con.prepareStatement(query);
-							ps.execute();
-							PreparedStatement ps2 = con.prepareStatement(query2);
-							ps2.execute();
-							JOptionPane.showMessageDialog(null, "Student record deleted Successfully");
-							model3.getDataVector().removeAllElements();
-							model3.fireTableDataChanged();
-							table_1.setModel(model3);
-							ResultSet rs2 = stmt
-									.executeQuery("select * from student where Branch_id='" + teacherbranchid + "'");
-
-							while (rs2.next()) {
-
-								model3.addRow(new Object[] { rs2.getString(1), rs2.getString(2),
-										rs2.getString(3) + "  Batch" });
-
-							}
-							tusn.setEditable(true);
-							tusn.setText("");
-						
-							tproctor.setText("");
-							txtphonef.setText("");
-							txtemailf.setText("");
-							tname.setText("");
-							tdate.setText("");
-							txtDobDd.setText("");
-							txtDobMm.setText("");
-							txtDobYy.setText("");
-							count = 0;
-
-						} catch (Exception ee) {
-							System.out.println(ee.getMessage());
-						}
-					} else {
-
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Note:Select a student from the lsit and press Pick to delete");
-				}
-
-			}
-		});
-		btnNewButton_6.setBackground(new Color(255, 0, 0));
-		btnNewButton_6.setFont(new Font("Sylfaen", Font.BOLD, 14));
-		btnNewButton_6.setBounds(953, 387, 89, 35);
-		newSPan.add(btnNewButton_6);
 
 		JLabel lblNewLabel_3 = new JLabel("Student Details");
 		lblNewLabel_3.setFont(new Font("Segoe Print", Font.BOLD, 18));
@@ -630,8 +604,12 @@ public class teachDashNew {
 
 		// THE TABLE
 		final JTable table = new JTable();
+		table.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+		table.setBackground(new Color(204, 153, 102));
 		scroll.setViewportView(table);
-		// final JTable table2=new JTable();
+		table.setRowHeight(30);
+		// final JTable table2=new JTable()
+		;
 		// scroll.setViewportView(table2);
 
 		DefaultTableModel model2 = new DefaultTableModel();
@@ -697,34 +675,27 @@ public class teachDashNew {
 			System.out.println(eee.getMessage());
 		}
 		subjectf.setText(subject);
-
-		btnNewButton_6.setEnabled(true);
 		JDesktopPane desktopPane_1 = new JDesktopPane();
 		desktopPane_1.setBackground(new Color(153, 204, 255));
-		desktopPane_1.setBounds(10, 64, 650, 424);
+		desktopPane_1.setBounds(10, 64, 650, 435);
 		newSPan.add(desktopPane_1);
 		tproctor = new JTextField();
-		tproctor.setBounds(406, 216, 171, 23);
+		tproctor.setBounds(396, 171, 171, 23);
 		desktopPane_1.add(tproctor);
 		tproctor.setColumns(10);
 
 		JLabel lblProctor = new JLabel("Proctor ID:");
-		lblProctor.setBounds(299, 198, 97, 51);
+		lblProctor.setBounds(289, 153, 97, 51);
 		desktopPane_1.add(lblProctor);
 		lblProctor.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		tdate = new JTextField();
-		tdate.setBounds(117, 338, 171, 23);
-		desktopPane_1.add(tdate);
-		tdate.setColumns(10);
-
 		JLabel lblDateOfJoin_1 = new JLabel("JoinYear:");
-		lblDateOfJoin_1.setBounds(20, 320, 87, 51);
+		lblDateOfJoin_1.setBounds(10, 90, 87, 51);
 		desktopPane_1.add(lblDateOfJoin_1);
 		lblDateOfJoin_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		branchf = new JTextField();
-		branchf.setBounds(117, 276, 171, 20);
+		branchf.setBounds(107, 231, 171, 20);
 		desktopPane_1.add(branchf);
 		branchf.setEditable(false);
 
@@ -738,106 +709,130 @@ public class teachDashNew {
 		tclassid.setColumns(10);
 
 		tusn = new JTextField();
-		tusn.setBounds(117, 153, 171, 23);
+		tusn.setBounds(108, 171, 171, 23);
 		desktopPane_1.add(tusn);
 		tusn.setColumns(10);
 		tname = new JTextField();
-		tname.setBounds(117, 94, 171, 23);
+		tname.setBounds(107, 49, 171, 23);
 		desktopPane_1.add(tname);
 		tname.setColumns(10);
-
+		
 		JLabel lblDeptAddS = new JLabel("Branch:");
-		lblDeptAddS.setBounds(20, 258, 87, 51);
+		lblDeptAddS.setBounds(10, 213, 87, 51);
 		desktopPane_1.add(lblDeptAddS);
 		lblDeptAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblClassIdAddS = new JLabel("Class Id :");
-		lblClassIdAddS.setBounds(20, 198, 87, 51);
+		lblClassIdAddS.setBounds(10, 279, 87, 51);
 		desktopPane_1.add(lblClassIdAddS);
 		lblClassIdAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblUsnAddS = new JLabel("USN :");
-		lblUsnAddS.setBounds(20, 135, 87, 51);
+		lblUsnAddS.setBounds(10, 153, 87, 51);
 		desktopPane_1.add(lblUsnAddS);
 		lblUsnAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JLabel lblNameAddS = new JLabel("Name :");
-		lblNameAddS.setBounds(20, 76, 87, 51);
+		lblNameAddS.setBounds(10, 31, 87, 51);
 		desktopPane_1.add(lblNameAddS);
 		lblNameAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblPhoneAddS = new JLabel("Phone :");
-		lblPhoneAddS.setBounds(309, 257, 87, 51);
+		lblPhoneAddS.setBounds(299, 212, 87, 51);
 		desktopPane_1.add(lblPhoneAddS);
 		lblPhoneAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtphonef = new JTextField();
-		txtphonef.setBounds(406, 275, 171, 23);
+		txtphonef.setBounds(396, 230, 171, 23);
 		desktopPane_1.add(txtphonef);
 		txtphonef.setColumns(10);
 
 		JLabel lblEmailAddS = new JLabel("Email :");
-		lblEmailAddS.setBounds(308, 320, 87, 51);
+		lblEmailAddS.setBounds(298, 275, 87, 51);
 		desktopPane_1.add(lblEmailAddS);
 		lblEmailAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtemailf = new JTextField();
 		txtemailf.setEditable(false);
-		txtemailf.setBounds(406, 338, 151, 23);
+		txtemailf.setBounds(396, 293, 234, 23);
 		desktopPane_1.add(txtemailf);
 		txtemailf.setColumns(10);
 		desktopPane_1.add(comboBox);
 		JLabel lblSubAddS = new JLabel("Subject Series:");
-		lblSubAddS.setBounds(309, 135, 151, 51);
+		lblSubAddS.setBounds(299, 90, 151, 51);
 		desktopPane_1.add(lblSubAddS);
 		lblSubAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblDobAddS = new JLabel("D.O.B :");
-		lblDobAddS.setBounds(309, 76, 65, 51);
+		lblDobAddS.setBounds(299, 31, 65, 51);
 		desktopPane_1.add(lblDobAddS);
 		lblDobAddS.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtDobDd = new JTextField();
-		txtDobDd.setBounds(406, 94, 54, 23);
+		txtDobDd.setBounds(396, 49, 54, 23);
 		desktopPane_1.add(txtDobDd);
 		txtDobDd.setForeground(Color.BLACK);
 		txtDobDd.setColumns(10);
 
 		txtDobMm = new JTextField();
-		txtDobMm.setBounds(499, 94, 54, 23);
+		txtDobMm.setBounds(489, 49, 54, 23);
 		desktopPane_1.add(txtDobMm);
 		txtDobMm.setForeground(Color.BLACK);
 		txtDobMm.setColumns(10);
 
 		txtDobYy = new JTextField();
-		txtDobYy.setBounds(586, 94, 54, 23);
+		txtDobYy.setBounds(586, 49, 54, 23);
 		desktopPane_1.add(txtDobYy);
 		txtDobYy.setForeground(Color.BLACK);
 		txtDobYy.setColumns(10);
 		JLabel lblDd = new JLabel("DD");
-		lblDd.setBounds(382, 98, 14, 14);
+		lblDd.setBounds(372, 53, 14, 14);
 		desktopPane_1.add(lblDd);
 
 		JLabel lblMm_1 = new JLabel("MM");
-		lblMm_1.setBounds(467, 98, 22, 14);
+		lblMm_1.setBounds(457, 53, 22, 14);
 		desktopPane_1.add(lblMm_1);
-	
-		JLabel lblYy_1 = new JLabel("YY");
-		lblYy_1.setBounds(563, 98, 14, 14);
+
+		JLabel lblYy_1 = new JLabel("YYYY");
+		lblYy_1.setBounds(553, 53, 34, 14);
 		desktopPane_1.add(lblYy_1);
 		JButton btnSubmitAddS = new JButton("Submit");
-		btnSubmitAddS.setBounds(190, 389, 114, 35);
+		btnSubmitAddS.setBounds(187, 364, 114, 35);
 		desktopPane_1.add(btnSubmitAddS);
 		btnSubmitAddS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (tusn.getText().equals("") || tname.getText().equals("") || tdate.getText().equals("")
+				if (tusn.getText().equals("") || tname.getText().equals("")
 						|| txtphonef.getText().equals("")
 						|| tproctor.getText().equals("") || txtemailf.getText().equals("")
 						|| txtDobMm.getText().equals("") || txtDobYy.getText().equals("")
-						|| txtDobDd.getText().equals("") || tusn.getText().equals("")) {
+						|| txtDobDd.getText().equals("") || tusn.getText().equals(""))
+				{
 					JOptionPane.showMessageDialog(null, "Enter details in all field");
-				} else {
-					try {
+				}
+				else if(txtphonef.getText().length()<10||txtphonef.getText().length()>10)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Phone Number");
+				}
+			
+				else if((txtDobYy.getText().length()<4))
+					
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please enter a valid DOB");
+				}
+				else if((Integer.parseInt(txtDobYy.getText())>Integer.parseInt(strDate.toString().substring(6))))
+						
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please enter a valid DOB");
+					
+				}
+			
+				else 
+				{
+					
+					try
+					{
 
 						Class.forName("com.mysql.jdbc.Driver");
 						System.out.println("Driver loaded successfully");
@@ -848,7 +843,7 @@ public class teachDashNew {
 						PreparedStatement ps = con.prepareStatement(query);
 						ps.setString(1, tusn.getText().toUpperCase());
 						ps.setString(2, tname.getText());
-						ps.setString(3, tdate.getText());
+						ps.setString(3, comboJoinYear.getSelectedItem().toString());
 						ps.setString(4, branchf.getText().toUpperCase());
 						ps.setString(5, comboBox_4.getSelectedItem().toString());
 						ps.setString(6, tproctor.getText());
@@ -869,7 +864,7 @@ public class teachDashNew {
 						ps2.setInt(5, -1);
 						ps2.setInt(6, -1);
 						ps2.setInt(7, -1);
-
+						
 						ps2.execute();
 						String query3 = "Insert into marks (USN,Name,BranchID,SubjectId,IA1,IA2,IA3)"
 								+ "values(?,?,?,?,?,?,?)";
@@ -901,12 +896,12 @@ public class teachDashNew {
 						table_1.setModel(model3);
 
 						tusn.setText("");
-						
+
 						tproctor.setText("");
 						txtphonef.setText("");
 						txtemailf.setText("");
 						tname.setText("");
-						tdate.setText("");
+						
 						txtDobDd.setText("");
 						txtDobMm.setText("");
 						txtDobYy.setText("");
@@ -937,15 +932,49 @@ public class teachDashNew {
 						model4.getDataVector().removeAllElements();
 						model4.fireTableDataChanged();
 						table_3.setModel(model4);
-						ResultSet rs2 = stmt.executeQuery("select * from marks where BranchID='" + teacherbranchid
+						ResultSet rs = stmt.executeQuery("select * from marks where BranchID='" + teacherbranchid
 								+ "' and subjectId='" + subject + "'");
-						while (rs2.next()) {
+						while (rs.next()) 
+						{
 
-							model4.addRow(new Object[] { rs2.getString(1), rs2.getString(2), rs2.getString(5),
-									rs2.getString(6), rs2.getString(7) });
+							int avg = 0;
+							int countNot = 0;
+							int marks[] = new int[3];
 
+							if(rs.getInt(5) == -1)
+								marks[0] = 0;
+							else
+							{
+								marks[0] = rs.getInt(5);
+								countNot++;
+							}
+
+							if(rs.getInt(6) == -1)
+								marks[1] = 0;
+							else
+							{
+								marks[1] = rs.getInt(6);
+								countNot++;
+							}
+
+							if(rs.getInt(7) == -1)
+								marks[2] = 0;
+							else
+							{
+								marks[2] = rs.getInt(7);
+								countNot++;
+							}
+							if(countNot != 0)
+								avg = (marks[0]+marks[1]+marks[2])/countNot;
+							else
+								avg = 0;
+
+							model4.addRow(new Object[] { rs.getString(1) ,rs.getString(2) ,marks[0] ,marks[1] ,marks[2] ,avg});
+						
 						}
-					} catch (Exception ee) {
+						table_3.setModel(model4);
+					}
+					catch (Exception ee) {
 						System.out.println(ee.getMessage());
 					}
 
@@ -965,7 +994,7 @@ public class teachDashNew {
 				txtphonef.setText("");
 				txtemailf.setText("");
 				tname.setText("");
-				tdate.setText("");
+				
 				txtDobDd.setText("");
 				txtDobMm.setText("");
 				txtDobYy.setText("");
@@ -973,7 +1002,7 @@ public class teachDashNew {
 			}
 		});
 		btnReset_1.setBackground(Color.GREEN);
-		btnReset_1.setBounds(356, 389, 114, 35);
+		btnReset_1.setBounds(353, 364, 114, 35);
 		desktopPane_1.add(btnReset_1);
 
 		JButton btnNewButton_7 = new JButton("Generate ");
@@ -985,22 +1014,147 @@ public class teachDashNew {
 					JOptionPane.showMessageDialog(null,"Complete All Fields");
 				else
 				{
-					sEmail = tname.getText().toLowerCase().replaceAll("\\s+","").concat(tusn.getText().substring(7)).concat(".").concat(comboBox_4.getSelectedItem().toString().concat("@saividya.ac.in"));
+					sEmail = tname.getText().toLowerCase().replaceAll("\\s+","").concat(tusn.getText().substring(7)).concat(".").concat((comboJoinYear.getSelectedItem().toString().substring(2).concat(comboBox_4.getSelectedItem().toString().substring(2))).concat("@saividya.ac.in"));
 					txtemailf.setText(sEmail);
 				}
-			
+
 			}
 		});
-		btnNewButton_7.setBounds(561, 338, 89, 23);
+		btnNewButton_7.setBounds(541, 331, 89, 23);
 		desktopPane_1.add(btnNewButton_7);
-		
+
 
 		desktopPane_1.add(comboBox_4);
+		
+	
+		desktopPane_1.add(comboJoinYear);
 		// }
 
 		JDesktopPane desktopPane_5 = new JDesktopPane();
+		desktopPane_5.setBackground(new Color(102, 102, 153));
 		desktopPane_5.setBounds(670, 53, 413, 393);
 		newSPan.add(desktopPane_5);
+
+		JButton btnNewButton_6 = new JButton("Delete");
+		btnNewButton_6.setBounds(286, 335, 89, 35);
+		desktopPane_5.add(btnNewButton_6);
+		btnNewButton_6.setEnabled(false);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (count > 0) {
+
+					int inputt = JOptionPane.showConfirmDialog(null,
+							"Do you really want to Remove data for " + tname.getText());
+					if (inputt == 0) {
+
+						try {
+							Class.forName("com.mysql.jdbc.Driver");
+							System.out.println("Driver loaded successfully");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root",
+									"");
+							Statement stmt = con.createStatement();
+
+							String query = "delete from student where USN='" + tusn.getText() + "'";
+							String query2 = "delete from marks where USN='" + tusn.getText() + "'";
+							PreparedStatement ps = con.prepareStatement(query);
+							ps.execute();
+							PreparedStatement ps2 = con.prepareStatement(query2);
+							ps2.execute();
+							JOptionPane.showMessageDialog(null, "Student record deleted Successfully");
+							model3.getDataVector().removeAllElements();
+							model3.fireTableDataChanged();
+							table_1.setModel(model3);
+							ResultSet rs2 = stmt
+									.executeQuery("select * from student where Branch_id='" + teacherbranchid + "'");
+
+							while (rs2.next()) {
+
+								model3.addRow(new Object[] { rs2.getString(1), rs2.getString(2),
+										rs2.getString(3) + "  Batch" });
+
+							}
+							tusn.setEditable(true);
+							tusn.setText("");
+
+							tproctor.setText("");
+							txtphonef.setText("");
+							txtemailf.setText("");
+							tname.setText("");
+		
+							txtDobDd.setText("");
+							txtDobMm.setText("");
+							txtDobYy.setText("");
+							count = 0;
+
+						} catch (Exception ee) {
+							System.out.println(ee.getMessage());
+						}
+						try {
+							Class.forName("com.mysql.jdbc.Driver");
+							System.out.println("Driver loaded successfully");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root", "");
+							Statement stmt = con.createStatement();
+							model4.getDataVector().removeAllElements();
+							model4.fireTableDataChanged();
+							table_3.setModel(model4);
+							ResultSet rs = stmt.executeQuery("select * from marks where BranchID='" + teacherbranchid
+									+ "' and subjectId='" + subject + "'");
+							while (rs.next()) 
+							{
+
+								int avg = 0;
+								int countNot = 0;
+								int marks[] = new int[3];
+
+								if(rs.getInt(5) == -1)
+									marks[0] = 0;
+								else
+								{
+									marks[0] = rs.getInt(5);
+									countNot++;
+								}
+
+								if(rs.getInt(6) == -1)
+									marks[1] = 0;
+								else
+								{
+									marks[1] = rs.getInt(6);
+									countNot++;
+								}
+
+								if(rs.getInt(7) == -1)
+									marks[2] = 0;
+								else
+								{
+									marks[2] = rs.getInt(7);
+									countNot++;
+								}
+								if(countNot != 0)
+									avg = (marks[0]+marks[1]+marks[2])/countNot;
+								else
+									avg = 0;
+
+								model4.addRow(new Object[] { rs.getString(1) ,rs.getString(2) ,marks[0] ,marks[1] ,marks[2] ,avg});
+							
+							}
+							table_3.setModel(model4);
+						
+						} catch (Exception ee) {
+							System.out.println(ee.getMessage());
+						}
+					} else {
+
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Note:Select a student from the lsit and press Pick to delete");
+				}
+
+			}
+		});
+		btnNewButton_6.setBackground(new Color(255, 0, 0));
+		btnNewButton_6.setFont(new Font("Sylfaen", Font.BOLD, 14));
+
+		btnNewButton_6.setEnabled(true);
 
 		JLabel lblNewLabel = new JLabel("EMUDS-Add Student");
 		lblNewLabel.setFont(new Font("Poor Richard", Font.PLAIN, 25));
@@ -1009,14 +1163,14 @@ public class teachDashNew {
 
 		JDesktopPane desktopPane_8 = new JDesktopPane();
 		desktopPane_8.setBackground(new Color(153, 204, 255));
-		desktopPane_8.setBounds(658, 457, 425, 31);
+		desktopPane_8.setBounds(658, 457, 425, 42);
 		newSPan.add(desktopPane_8);
 
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(10, 53, 387, 13);
 		newSPan.add(separator_2);
 		JScrollPane scroll3 = new JScrollPane();
-		scroll3.setBounds(605, 89, 478, 337);
+		scroll3.setBounds(514, 89, 553, 337);
 
 		JPanel marksPan = new JPanel();
 		marksPan.setForeground(Color.ORANGE);
@@ -1025,11 +1179,15 @@ public class teachDashNew {
 		marksPan.setLayout(null);
 		marksPan.add(scroll3);
 		table_3 = new JTable(model4);
+		table_3.setFont(new Font("Sylfaen", Font.PLAIN, 13));
+		table_3.setBackground(new Color(255, 255, 255));
 		// scroll3.setColumnHeaderView(table_3);
-		table_3.setModel(model4);
+//		table_3.setModel(model4);
 		scroll3.setViewportView(table_3);
-		
-		
+		table_3.setRowHeight(30);
+		table_3.setRowMargin(10);
+		model4.addColumn("Average");
+
 		JLabel lblNewLabel_4 = new JLabel("EMUDS- Marks Upload");
 		lblNewLabel_4.setBounds(42, 11, 369, 44);
 		lblNewLabel_4.setFont(new Font("Poor Richard", Font.BOLD, 27));
@@ -1053,7 +1211,7 @@ public class teachDashNew {
 		JComboBox markscombo = new JComboBox();
 		markscombo.setBounds(196, 257, 110, 20);
 		markscombo.setToolTipText("Select");
-		markscombo.setModel(new DefaultComboBoxModel(new String[] { "IA 1", "IA 2", "IA 3" }));
+		markscombo.setModel(new DefaultComboBoxModel(new String[] { "IA1", "IA2", "IA3" }));
 		marksPan.add(markscombo);
 
 		JLabel lblEnterMarks = new JLabel("Enter Marks");
@@ -1097,38 +1255,102 @@ public class teachDashNew {
 			ResultSet rs = stmt.executeQuery(
 					"select * from marks where BranchID='" + teacherbranchid + "' and SubjectId='" + subject + "'");
 
-			while (rs.next()) {
+			while (rs.next()) 
+			{
 
-				model4.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(5), rs.getString(6),
-						rs.getString(7) });
+				int avg = 0;
+				int countNot = 0;
+				int marks[] = new int[3];
+
+				if(rs.getInt(5) == -1)
+					marks[0] = 0;
+				else
+				{
+					marks[0] = rs.getInt(5);
+					countNot++;
+				}
+
+				if(rs.getInt(6) == -1)
+					marks[1] = 0;
+				else
+				{
+					marks[1] = rs.getInt(6);
+					countNot++;
+				}
+
+				if(rs.getInt(7) == -1)
+					marks[2] = 0;
+				else
+				{
+					marks[2] = rs.getInt(7);
+					countNot++;
+				}
+				if(countNot != 0)
+					avg = (marks[0]+marks[1]+marks[2])/countNot;
+				else
+					avg = 0;
+
+				model4.addRow(new Object[] { rs.getString(1) ,rs.getString(2) ,marks[0] ,marks[1] ,marks[2] ,avg});
 
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 
 		}
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setBounds(537, 115, 131, 20);
 
-		JButton btnNewButton = new JButton("Push Marks");
-		btnNewButton.setBackground(new Color(0, 255, 0));
-		btnNewButton.setBounds(426, 236, 110, 35);
+		JDesktopPane desktopPane_4 = new JDesktopPane();
+		desktopPane_4.setBackground(new Color(255, 255, 204));
+		desktopPane_4.setBounds(44, 74, 460, 414);
+		marksPan.add(desktopPane_4);
 
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Pick");
+		btnNewButton_1.setBounds(319, 33, 110, 34);
+		desktopPane_4.add(btnNewButton_1);
+		btnNewButton_1.setBackground(new Color(102, 102, 255));
+
+		JButton btnPushMarks = new JButton("Push Marks");
+		btnPushMarks.setBounds(319, 169, 110, 35);
+		desktopPane_4.add(btnPushMarks);
+		btnPushMarks.setBackground(new Color(0, 255, 0));
+
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(319, 306, 110, 34);
+		desktopPane_4.add(btnReset);
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				marksnamef.setText("");
+				marksidf.setText("");
+				marksf.setText("");
+				count = 0;
+
+			}
+
+		});
+		btnReset.setBackground(new Color(204, 51, 153));
+
+		btnPushMarks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (count > 0) {
+				if (count > 0) 
+				{
 					if (!(marksf.getText().equals("")))
 
 					{
-						try {
+						try 
+						{
 							Class.forName("com.mysql.jdbc.Driver");
 
 							Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root",
 									"");
 							Statement stmt = con.createStatement();
 
-							if (markscombo.getSelectedItem().toString().equals("IA 1")) {
-								String up = "Update marks set IA1='" + Integer.parseInt(marksf.getText())
-								+ "' where USN ='" + marksidf.getText() + "' and subjectId='" + subject + "' ";
+							if(markscombo.getSelectedItem().toString().equals("IA1"))
+							{	
+								String up = "Update marks set IA1 = '"+Integer.parseInt(marksf.getText())+"' where USN = '"+marksidf.getText()+"' and subjectId = '"+subject+"' ";
+
 								stmt.executeUpdate(up);
 								JOptionPane.showMessageDialog(null, "Marks Pushed Successfully");
 
@@ -1139,17 +1361,49 @@ public class teachDashNew {
 								ResultSet rs = stmt.executeQuery("select * from marks where BranchID='"
 										+ teacherbranchid + "' and subjectId='" + subject + "'");
 
-								while (rs.next()) {
+								while (rs.next())
+								{
+									int avg = 0;
+									int countNot = 0;
+									int marks[] = new int[3];
 
-									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(5),
-											rs.getString(6), rs.getString(7) });
+									if(rs.getInt(5) == -1)
+										marks[0] = 0;
+									else
+									{
+										marks[0] = rs.getInt(5);
+										countNot++;
+									}
 
+									if(rs.getInt(6) == -1)
+										marks[1] = 0;
+									else
+									{
+										marks[1] = rs.getInt(6);
+										countNot++;
+									}
+
+									if(rs.getInt(7) == -1)
+										marks[2] = 0;
+									else
+									{
+										marks[2] = rs.getInt(7);
+										countNot++;
+									}
+
+									if(countNot != 0)
+										avg = (marks[0]+marks[1]+marks[2])/countNot;
+									else
+										avg = 0;
+
+									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), marks[0] , marks[1] , marks[2] , avg});
 								}
-
 							}
-							if (markscombo.getSelectedItem().toString().equals("IA 2")) {
-								String up = "Update marks set IA2='" + Integer.parseInt(marksf.getText())
-								+ "' where USN ='" + marksidf.getText() + "' and subjectId='" + subject + "' ";
+
+							if(markscombo.getSelectedItem().toString().equals("IA2"))
+							{	
+								String up = "Update marks set IA2 = '"+Integer.parseInt(marksf.getText())+"' where USN = '"+marksidf.getText()+"' and subjectId = '"+subject+"' ";
+
 								stmt.executeUpdate(up);
 								JOptionPane.showMessageDialog(null, "Marks Pushed Successfully");
 
@@ -1159,17 +1413,50 @@ public class teachDashNew {
 								table_3.setModel(model4);
 								ResultSet rs = stmt.executeQuery("select * from marks where BranchID='"
 										+ teacherbranchid + "' and subjectId='" + subject + "'");
-								while (rs.next()) {
 
-									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(5),
-											rs.getString(6), rs.getString(7) });
+								while (rs.next())
+								{
+									int avg = 0;
+									int countNot = 0;
+									int marks[] = new int[3];
 
+									if(rs.getInt(5) == -1)
+										marks[0] = 0;
+									else
+									{
+										marks[0] = rs.getInt(5);
+										countNot++;
+									}
+
+									if(rs.getInt(6) == -1)
+										marks[1] = 0;
+									else
+									{
+										marks[1] = rs.getInt(6);
+										countNot++;
+									}
+									
+									if(rs.getInt(7) == -1)
+										marks[2] = 0;
+									else
+									{
+										marks[2] = rs.getInt(7);
+										countNot++;
+									}
+
+									if(countNot != 0)
+										avg = (marks[0]+marks[1]+marks[2])/countNot;
+									else
+										avg = 0;
+
+									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), marks[0] , marks[1] , marks[2] , avg});
 								}
-
 							}
-							if (markscombo.getSelectedItem().toString().equals("IA 3")) {
-								String up = "Update marks set IA3='" + Integer.parseInt(marksf.getText())
-								+ "' where USN ='" + marksidf.getText() + "' and subjectId='" + subject + "' ";
+
+							if(markscombo.getSelectedItem().toString().equals("IA3"))
+							{	
+								String up = "Update marks set IA3 = '"+Integer.parseInt(marksf.getText())+"' where USN = '"+marksidf.getText()+"' and subjectId = '"+subject+"' ";
+
 								stmt.executeUpdate(up);
 								JOptionPane.showMessageDialog(null, "Marks Pushed Successfully");
 
@@ -1180,33 +1467,61 @@ public class teachDashNew {
 								ResultSet rs = stmt.executeQuery("select * from marks where BranchID='"
 										+ teacherbranchid + "' and subjectId='" + subject + "'");
 
-								while (rs.next()) {
+								while (rs.next())
+								{
+									int avg = 0;
+									int countNot = 0;
+									int marks[] = new int[3];
 
-									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(5),
-											rs.getString(6), rs.getString(7) });
+									if(rs.getInt(5) == -1)
+										marks[0] = 0;
+									else
+									{
+										marks[0] = rs.getInt(5);
+										countNot++;
+									}
 
+									if(rs.getInt(6) == -1)
+										marks[1] = 0;
+									else
+									{
+										marks[1] = rs.getInt(6);
+										countNot++;
+									}
+
+									if(rs.getInt(7) == -1)
+										marks[2] = 0;
+									else
+									{
+										marks[2] = rs.getInt(7);
+										countNot++;
+									}
+
+									if(countNot != 0)
+										avg = (marks[0]+marks[1]+marks[2])/countNot;
+									else
+										avg = 0;
+
+									model4.addRow(new Object[] { rs.getString(1), rs.getString(2), marks[0] , marks[1] , marks[2] , avg});
 								}
-
 							}
-
-						} catch (Exception ee) {
-							System.out.println(ee.getMessage());
-						}
-					} else {
-						JOptionPane.showMessageDialog(null, "Marks Feild cant be empty");
+					} 
+					catch (Exception ee) {
+						System.out.println(ee.getMessage());
 					}
-
+				} 
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Marks Feild cant be empty");
 				}
 
-				else {
-					JOptionPane.showMessageDialog(null, "Please Pick a student");
-				}
 			}
-		});
-		marksPan.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Pick");
-		btnNewButton_1.setBackground(new Color(102, 102, 255));
+			else {
+				JOptionPane.showMessageDialog(null, "Please Pick a student");
+			}
+		}
+	});
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -1240,37 +1555,15 @@ public class teachDashNew {
 
 			}
 		});
-		btnNewButton_1.setBounds(426, 108, 110, 34);
-		marksPan.add(btnNewButton_1);
-
-		JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				marksnamef.setText("");
-				marksidf.setText("");
-				marksf.setText("");
-				count = 0;
-
-			}
-
-		});
-		btnReset.setBackground(new Color(204, 51, 153));
-		btnReset.setBounds(426, 375, 110, 34);
-		marksPan.add(btnReset);
-
-		JDesktopPane desktopPane_4 = new JDesktopPane();
-		desktopPane_4.setBackground(new Color(255, 255, 204));
-		desktopPane_4.setBounds(44, 74, 539, 414);
-		marksPan.add(desktopPane_4);
 
 		JLabel lblNewLabel_5 = new JLabel("Display Panel");
 		lblNewLabel_5.setFont(new Font("Segoe Script", Font.PLAIN, 22));
-		lblNewLabel_5.setBounds(781, 43, 170, 35);
+		lblNewLabel_5.setBounds(697, 43, 170, 35);
 		marksPan.add(lblNewLabel_5);
 
 		JDesktopPane desktopPane_12 = new JDesktopPane();
 		desktopPane_12.setBackground(new Color(255, 255, 204));
-		desktopPane_12.setBounds(583, 437, 500, 51);
+		desktopPane_12.setBounds(503, 437, 580, 51);
 		marksPan.add(desktopPane_12);
 
 		JSeparator separator_3 = new JSeparator();
@@ -1309,7 +1602,7 @@ public class teachDashNew {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (count1 != 0 && count2 != 0) {
+			
 					// TODO Auto-generated method stub
 					int c = 0;
 					// GET SELECTED ROW
@@ -1341,11 +1634,15 @@ public class teachDashNew {
 								ps.setString(6, col2);
 								ps.execute();
 								c++;
-							} catch (Exception e) {
+							} 
+							catch (Exception e)
+							{
 								System.out.println(e.getMessage());
 							}
-
-						} else {
+						}
+						else
+						{
+						 
 							try {
 
 								Class.forName("com.mysql.jdbc.Driver");
@@ -1367,22 +1664,25 @@ public class teachDashNew {
 								ps.setString(6, col2);
 								ps.execute();
 								c++;
-							} catch (Exception e) {
+							}
+							catch (Exception e) {
 								System.out.println(e.getMessage());
 							}
-						}
+						
 
 					}
+					}
 					if (c > 0)
+					{
 						JOptionPane.showMessageDialog(null, "Attendance pushed");
-					btn.setEnabled(false);
-
+						btn.setEnabled(false);
+					
 				} else {
-					JOptionPane.showMessageDialog(null, "Please select the date of attendance");
+					JOptionPane.showMessageDialog(null,"Eroor");
 				}
+			
 			}
 		});
-
 		// ADD BUTTON TO FORM
 		btn.setBounds(789, 410, 152, 42);
 		atnSPan.add(btn);
@@ -1437,8 +1737,8 @@ public class teachDashNew {
 					}
 				}
 				if (c > 0)
-					JOptionPane.showMessageDialog(null, "Successfull");
-				btn.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "Attendance Updated");
+					btn.setEnabled(false);
 
 			}
 
@@ -1455,10 +1755,10 @@ public class teachDashNew {
 		lblAttendanceForDate.setBounds(687, 14, 141, 30);
 		atnSPan.add(lblAttendanceForDate);
 		//		if(desig.equals("HOD"))
-			//	{
+		//	{
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		tabbedPane.addTab("Add(Teacher)", null, panel, null);
+		tabbedPane.addTab("Add(Teacher)*", null, panel, null);
 		panel.setLayout(null);
 
 		JLabel lblNewLabel_9 = new JLabel("EMUDS-Add Teacher");
@@ -1495,11 +1795,6 @@ public class teachDashNew {
 		lblJoiningYear.setBounds(48, 265, 131, 27);
 		panel.add(lblJoiningYear);
 
-		txttdateofjoin = new JTextField();
-		txttdateofjoin.setColumns(10);
-		txttdateofjoin.setBounds(195, 269, 160, 20);
-		panel.add(txttdateofjoin);
-
 		JLabel lblBranchId = new JLabel("Branch ID");
 		lblBranchId.setFont(new Font("Sylfaen", Font.BOLD, 20));
 		lblBranchId.setBounds(48, 356, 131, 27);
@@ -1518,79 +1813,8 @@ public class teachDashNew {
 		txttclassid = new JTextField();
 		txttclassid.setColumns(10);
 		txttclassid.setBounds(195, 441, 160, 20);
+		
 		panel.add(txttclassid);
-
-		JLabel lblDesignation = new JLabel("Designation");
-		lblDesignation.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblDesignation.setBounds(435, 100, 131, 27);
-		panel.add(lblDesignation);
-
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] { "Teacher" }));
-		comboBox_1.setToolTipText("Select");
-		comboBox_1.setBounds(597, 104, 131, 20);
-		panel.add(comboBox_1);
-
-		JLabel lblSubjectId_2 = new JLabel("Subject ID");
-		lblSubjectId_2.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblSubjectId_2.setBounds(435, 184, 131, 27);
-		panel.add(lblSubjectId_2);
-
-		JComboBox comboBox_3 = new JComboBox();
-
-		comboBox_3.setBounds(597, 188, 131, 20);
-		panel.add(comboBox_3);
-		JLabel lblDob_1 = new JLabel("DOB");
-		lblDob_1.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblDob_1.setBounds(471, 265, 67, 27);
-		panel.add(lblDob_1);
-
-		txtD = new JTextField();
-		txtD.setBounds(597, 269, 32, 20);
-		panel.add(txtD);
-		txtD.setColumns(10);
-
-		txtM = new JTextField();
-		txtM.setColumns(10);
-		txtM.setBounds(669, 269, 32, 20);
-		panel.add(txtM);
-
-		txtY = new JTextField();
-		txtY.setColumns(10);
-		txtY.setBounds(728, 269, 32, 20);
-		panel.add(txtY);
-
-		JLabel lblDd_1 = new JLabel("DD");
-		lblDd_1.setBounds(573, 272, 24, 14);
-		panel.add(lblDd_1);
-
-		JLabel lblMm = new JLabel("MM");
-		lblMm.setBounds(647, 272, 24, 14);
-		panel.add(lblMm);
-
-		JLabel lblYy = new JLabel("YY");
-		lblYy.setBounds(711, 272, 24, 14);
-		panel.add(lblYy);
-
-		JLabel lblPhone = new JLabel("Phone");
-		lblPhone.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblPhone.setBounds(466, 356, 131, 27);
-		panel.add(lblPhone);
-
-		txttphone = new JTextField();
-		txttphone.setBounds(597, 360, 131, 20);
-		panel.add(txttphone);
-		txttphone.setColumns(10);
-
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblEmail.setBounds(471, 437, 131, 27);
-		panel.add(lblEmail);
-
-		txttemail = new JTextField();
-		txttemail.setColumns(10);
-		txttemail.setBounds(597, 441, 131, 20);
-		panel.add(txttemail);
 
 		if (teacherbranchid.equals("ISE")) {
 			comboBox_2.setModel(new DefaultComboBoxModel(new String[] { "ISE" }));
@@ -1607,25 +1831,60 @@ public class teachDashNew {
 			comboBox_3.setModel(new DefaultComboBoxModel(new String[] { "17CS50", "17CS51", "17CS52" }));
 		}
 		DefaultTableModel model5 = new DefaultTableModel();
-		JTable table_5 = new JTable(model5);
-		JScrollPane scroll5 = new JScrollPane();
-		scroll5.setBounds(782, 71, 301, 359);
-		panel.add(scroll5);
-
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(537, 33, 131, 20);
 		model5.addColumn("Teacher ID");
 		model5.addColumn("Name");
 		model5.addColumn("Join Year");
-		scroll5.setViewportView(table_5);
+		JComboBox comboTeacherJoin = new JComboBox();
+		comboTeacherJoin.setModel(new DefaultComboBoxModel(new String[] {"2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018"}));
+		comboTeacherJoin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBox_2.getSelectedItem().toString().equals("CIVIL"))
+				{
+					txttclassid.setText(comboTeacherJoin.getSelectedItem().toString().substring(2)+comboBox_2.getSelectedItem().toString().substring(0,3));
+				}
+				else
+					txttclassid.setText(comboTeacherJoin.getSelectedItem().toString().substring(2)+comboBox_2.getSelectedItem().toString().substring(0,2));
+			}
+		});
+		
+		comboTeacherJoin.setBounds(165, 23, 158, 20);
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] { "Teacher" }));
+		comboBox_1.setToolTipText("Select");
 		JButton btnSubmitAddT = new JButton("Submit");
 		btnSubmitAddT.setBackground(new Color(0, 255, 0));
 		btnSubmitAddT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtteacherid.getText().equals("") || txttname.getText().equals("")
-						|| txttdateofjoin.getText().equals("") || txttphone.getText().equals("")
+						|| txttphone.getText().equals("")
 						|| txttclassid.getText().equals("") || txttemail.getText().equals("")
 						|| txtD.getText().equals("") || txtY.getText().equals("") || txtM.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Enter details in all field");
-				} else {
+					
+					
+				} 
+				else if(txttphone.getText().length()<10||txttphone.getText().length()>10)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Phone Number");
+				}
+//				
+				else if((txtY.getText().length()<4))
+					
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please enter a valid DOB");
+				}
+				else if((Integer.parseInt(txtY.getText())>Integer.parseInt(strDate.toString().substring(6))))
+						
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please enter a valid DOB");
+					
+				}
+			
+				else
+				{
 					try {
 
 						Class.forName("com.mysql.jdbc.Driver");
@@ -1642,15 +1901,15 @@ public class teachDashNew {
 						ps.setString(5, txtD.getText() + "/" + txtM.getText() + "/" + txtY.getText());
 						ps.setString(6, txttphone.getText());
 						ps.setString(7, txttemail.getText());
-						ps.setString(8, txttdateofjoin.getText());
-						ps.setString(9, comboBox_2.getSelectedItem().toString());
+						ps.setString(8, comboTeacherJoin.getSelectedItem().toString());
+						ps.setString(9, comboBox_1.getSelectedItem().toString());
 						ps.setString(10, comboBox_3.getSelectedItem().toString());
 						ps.setString(11, txtteacherid.getText());
 
 						ps.execute();
 						JOptionPane.showMessageDialog(null, "Teacher added successfully");
 						try {
-						
+
 							model5.getDataVector().removeAllElements(); model5.fireTableDataChanged();
 							// model.addRow(new Object[]
 							// {textField.getText(),textField_1.getText(),textField_2.getText()});
@@ -1670,8 +1929,6 @@ public class teachDashNew {
 						txttname.setText("");
 						txttphone.setText("");
 						txttemail.setText("");
-						txttdateofjoin.setText("");
-
 						txtD.setText("");
 						txtM.setText("");
 						txtY.setText("");
@@ -1697,8 +1954,7 @@ public class teachDashNew {
 				txttname.setText("");
 				txttphone.setText("");
 				txttemail.setText("");
-				txttdateofjoin.setText("");
-
+			
 				txtD.setText("");
 				txtM.setText("");
 				txtY.setText("");
@@ -1706,26 +1962,134 @@ public class teachDashNew {
 		});
 		btnReset_2.setBounds(973, 462, 89, 37);
 		panel.add(btnReset_2);
-		
-
-		JLabel lblTeacherDetails = new JLabel("Teacher Details");
-		lblTeacherDetails.setFont(new Font("Segoe Print", Font.BOLD, 23));
-		lblTeacherDetails.setBounds(833, 27, 229, 40);
-		panel.add(lblTeacherDetails);
 
 		JDesktopPane desktopPane_9 = new JDesktopPane();
-		desktopPane_9.setBackground(new Color(204, 204, 255));
-		desktopPane_9.setBounds(10, 72, 761, 427);
+		desktopPane_9.setBackground(new Color(255, 255, 255));
+		desktopPane_9.setBounds(20, 62, 710, 437);
 		panel.add(desktopPane_9);
 
+		JLabel lblDesignation = new JLabel("Designation");
+		lblDesignation.setBounds(375, 29, 131, 27);
+		desktopPane_9.add(lblDesignation);
+		lblDesignation.setFont(new Font("Sylfaen", Font.BOLD, 20));
+
+
+		desktopPane_9.add(comboBox_1);
+		desktopPane_9.add(comboBox_3);
+
+		JLabel lblSubjectId_2 = new JLabel("Subject ID");
+		lblSubjectId_2.setBounds(375, 111, 131, 27);
+		desktopPane_9.add(lblSubjectId_2);
+		lblSubjectId_2.setFont(new Font("Sylfaen", Font.BOLD, 20));
+		JLabel lblDob_1 = new JLabel("DOB");
+		lblDob_1.setBounds(411, 192, 67, 27);
+		desktopPane_9.add(lblDob_1);
+		lblDob_1.setFont(new Font("Sylfaen", Font.BOLD, 20));
+
+		JLabel lblPhone = new JLabel("Phone");
+		lblPhone.setBounds(406, 283, 131, 27);
+		desktopPane_9.add(lblPhone);
+		lblPhone.setFont(new Font("Sylfaen", Font.BOLD, 20));
+
+		txttphone = new JTextField();
+		txttphone.setBounds(537, 287, 131, 20);
+		desktopPane_9.add(txttphone);
+		txttphone.setColumns(10);
+
+		txtD = new JTextField();
+		txtD.setBounds(537, 196, 32, 20);
+		desktopPane_9.add(txtD);
+		txtD.setColumns(10);
+
+		JLabel lblDd_1 = new JLabel("DD");
+		lblDd_1.setBounds(513, 199, 24, 14);
+		desktopPane_9.add(lblDd_1);
+
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(411, 369, 131, 27);
+		desktopPane_9.add(lblEmail);
+		lblEmail.setFont(new Font("Sylfaen", Font.BOLD, 20));
+
+		txttemail = new JTextField();
+		txttemail.setEditable(false);
+		txttemail.setBounds(501, 373, 199, 20);
+		desktopPane_9.add(txttemail);
+		txttemail.setColumns(10);
+
+		JButton btnGenerate = new JButton("Generate ");
+		btnGenerate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				String sEmail2="";
+				if(txtteacherid.getText().equals("") || txttname.getText().equals(""))
+					JOptionPane.showMessageDialog(null,"Complete All Fields");
+				else
+				{
+					sEmail2 = txttname.getText().toLowerCase().replaceAll("\\s+","").concat(txtteacherid.getText().substring(1)).concat(".").concat(comboBox_2.getSelectedItem().toString().concat("@saividya.ac.in"));
+					txttemail.setText(sEmail2);
+				}
+			}
+		});
+		btnGenerate.setBounds(563, 403, 89, 23);
+		desktopPane_9.add(btnGenerate);
+
+		JDesktopPane desktopPane_13 = new JDesktopPane();
+		desktopPane_13.setBackground(new Color(51, 204, 255));
+		desktopPane_13.setBounds(10, 11, 690, 69);
+		desktopPane_9.add(desktopPane_13);
+
+		JDesktopPane desktopPane_14 = new JDesktopPane();
+		desktopPane_14.setBackground(new Color(51, 204, 255));
+		desktopPane_14.setBounds(10, 177, 690, 69);
+		desktopPane_9.add(desktopPane_14);
+		
+				JLabel lblYy = new JLabel("YYYY");
+				lblYy.setBounds(620, 23, 24, 14);
+				desktopPane_14.add(lblYy);
+				
+						JLabel lblMm = new JLabel("MM");
+						lblMm.setBounds(563, 23, 24, 14);
+						desktopPane_14.add(lblMm);
+						
+								txtM = new JTextField();
+								txtM.setBounds(583, 20, 32, 20);
+								desktopPane_14.add(txtM);
+								txtM.setColumns(10);
+								
+										txtY = new JTextField();
+										txtY.setBounds(648, 20, 32, 20);
+										desktopPane_14.add(txtY);
+										txtY.setColumns(10);
+										
+										
+										desktopPane_14.add(comboTeacherJoin);
+
+		JDesktopPane desktopPane_15 = new JDesktopPane();
+		desktopPane_15.setBackground(new Color(51, 204, 255));
+		desktopPane_15.setBounds(10, 357, 690, 69);
+		desktopPane_9.add(desktopPane_15);
+
 		JDesktopPane desktopPane_10 = new JDesktopPane();
-		desktopPane_10.setBackground(new Color(204, 204, 255));
-		desktopPane_10.setBounds(771, 441, 322, 58);
+		desktopPane_10.setBackground(new Color(255, 255, 255));
+		desktopPane_10.setBounds(734, 441, 359, 58);
 		panel.add(desktopPane_10);
 
 		JDesktopPane desktopPane_11 = new JDesktopPane();
-		desktopPane_11.setBounds(776, 36, 317, 400);
+		desktopPane_11.setBackground(new Color(51, 102, 204));
+		desktopPane_11.setBounds(734, 36, 359, 400);
 		panel.add(desktopPane_11);
+		JTable table_5 = new JTable(model5);
+		table_5.setEnabled(false);
+		JScrollPane scroll5 = new JScrollPane();
+		scroll5.setBounds(10, 30, 320, 359);
+		desktopPane_11.add(scroll5);
+		scroll5.setViewportView(table_5);
+
+
+		JLabel lblTeacherDetails = new JLabel("Teacher Details");
+		lblTeacherDetails.setBounds(74, -11, 229, 40);
+		desktopPane_11.add(lblTeacherDetails);
+		lblTeacherDetails.setFont(new Font("Segoe Print", Font.BOLD, 23));
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -1752,8 +2116,8 @@ public class teachDashNew {
 		btn2.setBounds(746, 22, 80, 38);
 
 		btn2.setBackground(new Color(102, 102, 204));
-		//btn2.setEnabled(false);
-		 btnUpdate_2 = new JButton("Update");
+	
+		btnUpdate_2 = new JButton("Update");
 		btnUpdate_2.setBounds(591, 22, 90, 38);
 
 		btnUpdate_2.setBackground(new Color(102, 102, 255));
@@ -1765,7 +2129,7 @@ public class teachDashNew {
 		btnUpdate_2.setBackground(new Color(102, 102, 255));
 		JLabel lblEmudsattendancet = new JLabel("EMUDS-Teacher Attendance ");
 		lblEmudsattendancet.setFont(new Font("Tekton Pro", Font.PLAIN, 20));
-		lblEmudsattendancet.setBounds(20, 11, 246, 38);
+		lblEmudsattendancet.setBounds(20, 11, 319, 38);
 		atnTPan.add(lblEmudsattendancet);
 
 		atxtf2 = new JTextField();
@@ -1820,7 +2184,7 @@ public class teachDashNew {
 
 			// model.addRow(new Object[]
 			// {textField.getText(),textField_1.getText(),textField_2.getText()});
-			ResultSet rs = stmt.executeQuery("select * from teacher where Branch_id='" + teacherbranchid + "'");
+			ResultSet rs = stmt.executeQuery("select * from teacher where Branch_id='" + teacherbranchid + "' and Designation='Teacher' ");
 
 			while (rs.next()) {
 
@@ -1831,57 +2195,35 @@ public class teachDashNew {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		JButton btnRefreshListt = new JButton("Refresh List");
-		btnRefreshListt.addActionListener(new ActionListener() {
+		JButton RefereshButton2 = new JButton("Refresh List");
+		RefereshButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model6.getDataVector().removeAllElements(); model6.fireTableDataChanged();
-				  try { Class.forName("com.mysql.jdbc.Driver");
-				  
-				  Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf","root", "");
-				  Statement stmt=con.createStatement();
-				 
-				 
-				  ResultSet rs=stmt.executeQuery("select * from teacher where Branch_id='"+teacherbranchid+"'"); 
-				
-				  while(rs.next()) {
-				  
-				  model6.addRow(new Object[] {false,rs.getString(2),rs.getString(1)});
-				
-				  }
-				  }
-				  
-				  catch(Exception ee) { System.out.println(ee.getMessage()); } 
-				
-				
+				try { Class.forName("com.mysql.jdbc.Driver");
+
+				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf","root", "");
+				Statement stmt=con.createStatement();
+
+
+				ResultSet rs=stmt.executeQuery("select * from teacher where Branch_id='"+teacherbranchid+"' and Designation='Teacher'"); 
+
+				while(rs.next()) {
+
+					model6.addRow(new Object[] {false,rs.getString(2),rs.getString(1)});
+
+				}
+				}
+
+				catch(Exception ee) { System.out.println(ee.getMessage()); } 
+
+
 			}
 		});
-		/*
-		 * btnRefreshListt.addActionListener(new ActionListener() { public void
-		 * actionPetrformed(ActionEvent arg0) {
-		 * model6.getDataVector().removeAllElements(); model6.fireTableDataChanged();
-		 * try { Class.forName("com.mysql.jdbc.Driver");
-		 * 
-		 * Connection
-		 * con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf","root",
-		 * ""); Statement stmt=con.createStatement();
-		 * 
-		 * // model.addRow(new Object[]
-		 * {textField.getText(),textField_1.getText(),textField_2.getText()}); ResultSet
-		 * rs=stmt.executeQuery("select * from teacher where Branch_id='"
-		 * +teacherbranchid+"'"); java.sql.Date sqlDate = new java.sql.Date(new
-		 * java.util.Date().getTime()); // Â  Â System.out.println(sqlDate); // Â 
-		 * jTextField3.setText(dateFormat.format(date)); while(rs.next()) {
-		 * 
-		 * model6.addRow(new Object[] {false,rs.getString(2),rs.getString(1)});
-		 * 
-		 * } }
-		 * 
-		 * catch(Exception e) { System.out.println(e.getMessage()); } } });
-		 */
 
-		btnRefreshListt.setBackground(new Color(0, 0, 204));
-		btnRefreshListt.setBounds(491, 15, 128, 32);
-		atnTPan.add(btnRefreshListt);
+
+		RefereshButton2.setBackground(new Color(0, 0, 204));
+		RefereshButton2.setBounds(491, 15, 128, 32);
+		atnTPan.add(RefereshButton2);
 
 		JDesktopPane desktopPane_2t = new JDesktopPane();
 		desktopPane_2t.setBackground(new Color(51, 153, 204));
@@ -1894,16 +2236,16 @@ public class teachDashNew {
 		desktopPane_2t.add(scroll6);
 		scroll6.setViewportView(table7);
 
-		JButton btnNewButtonP2 = new JButton("PickDate");
-		btnNewButtonP2.setBackground(new Color(255, 0, 51));
-		btnNewButtonP2.setBounds(222, 98, 117, 38);
-		atnTPan.add(btnNewButtonP2);
+		JButton PickButton2 = new JButton("PickDate");
+		PickButton2.setBackground(new Color(255, 0, 51));
+		PickButton2.setBounds(222, 98, 117, 38);
+		atnTPan.add(PickButton2);
 		// perform action listener
-		btnNewButtonP2.addActionListener(new ActionListener() {
+		PickButton2.addActionListener(new ActionListener() {
 			// performed action
 			public void actionPerformed(ActionEvent arg0) {
 				count1 = 0;
-				// create frame new object Â f
+				// create frame new object  f
 				final JFrame f = new JFrame();
 				// set text which is collected by date picker i.e. set date
 				txtDate2.setText(new DatePicker(f).setPickedDate());
@@ -1964,8 +2306,10 @@ public class teachDashNew {
 					}
 				}
 				if (c > 0)
-					JOptionPane.showMessageDialog(null, "Successfull");
+				{
+					JOptionPane.showMessageDialog(null, "Attendance Updated");
 				btn2.setEnabled(false);
+				}
 
 			}
 
@@ -1975,7 +2319,7 @@ public class teachDashNew {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (count1 != 0 && count2 != 0) {
+				
 					// TODO Auto-generated method stub
 					int c = 0;
 					// GET SELECTED ROW
@@ -2011,8 +2355,11 @@ public class teachDashNew {
 								System.out.println(e.getMessage());
 							}
 
-						} else {
-							try {
+						}
+						else
+						{
+							try 
+							{
 
 								Class.forName("com.mysql.jdbc.Driver");
 								System.out.println("Driver loaded successfully");
@@ -2033,20 +2380,22 @@ public class teachDashNew {
 								ps.setString(5, col22);
 								ps.execute();
 								c++;
-							} catch (Exception e) {
+							}
+							catch (Exception e)
+							{
 								System.out.println(e.getMessage());
 							}
 						}
 
 					}
 					if (c > 0)
+					{
 						JOptionPane.showMessageDialog(null, "Attendance pushed");
-					btn2.setEnabled(false);
+						btn2.setEnabled(false);
+					}
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Please select the date of attendance");
-				}
-			}
+				} 
+			
 		});
 		/*attendacnce mark*/
 
@@ -2059,11 +2408,12 @@ public class teachDashNew {
 		// tabbedPane.setForegroundAt(1, new Color(204, 51, 102));
 
 		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Reetik\\Desktop\\teachertext.gif"));
-		lblNewLabel_1.setBounds(896, 21, 451, 53);
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\teachertext.gif"));
+		lblNewLabel_1.setBounds(1061, 21, 451, 53);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblEmuds = new JLabel("EMUDS");
+		lblEmuds.setForeground(new Color(255, 255, 255));
 		lblEmuds.setFont(new Font("Sylfaen", Font.BOLD, 56));
 		lblEmuds.setBounds(20, 21, 253, 63);
 		frame.getContentPane().add(lblEmuds);
@@ -2076,7 +2426,7 @@ public class teachDashNew {
 		atnSPan.add(txtDate);
 		// set columns
 		txtDate.setColumns(10);
-
+		btn.setEnabled(false);
 		// create button and there object
 		JButton btnNewButtonP = new JButton("PickDate");
 		btnNewButtonP.setBackground(new Color(255, 0, 51));
@@ -2085,7 +2435,7 @@ public class teachDashNew {
 			// performed action
 			public void actionPerformed(ActionEvent arg0) {
 				count1 = 0;
-				// create frame new object Â f
+				// create frame new object  f
 				final JFrame f = new JFrame();
 				// set text which is collected by date picker i.e. set date
 				txtDate.setText(new DatePicker(f).setPickedDate());
@@ -2102,7 +2452,7 @@ public class teachDashNew {
 		lblEmudsattendance.setFont(new Font("Tekton Pro", Font.PLAIN, 20));
 		lblEmudsattendance.setBounds(10, 11, 188, 38);
 		atnSPan.add(lblEmudsattendance);
-		btn.setEnabled(false);
+	//	btn.setEnabled(false);
 
 		atxtf = new JTextField();
 		atxtf.setEditable(false);
@@ -2134,8 +2484,8 @@ public class teachDashNew {
 					// {textField.getText(),textField_1.getText(),textField_2.getText()});
 					ResultSet rs = stmt.executeQuery("select * from student where Branch_id='" + teacherbranchid + "'");
 					java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
-					// Â  Â System.out.println(sqlDate);
-					// Â  jTextField3.setText(dateFormat.format(date));
+					//    System.out.println(sqlDate);
+					//   jTextField3.setText(dateFormat.format(date));
 					while (rs.next()) {
 
 						model.addRow(new Object[] { false, rs.getString(2), rs.getString(1) });
@@ -2159,14 +2509,15 @@ public class teachDashNew {
 		atnSPan.add(desktopPane_2);
 
 		JDesktopPane desktopPane_6 = new JDesktopPane();
+		desktopPane_6.setBackground(new Color(102, 153, 153));
 		desktopPane_6.setBounds(20, 69, 375, 323);
 		atnSPan.add(desktopPane_6);
 
-		JButton btnNewButton_4 = new JButton("Mark");
-		btnNewButton_4.setBounds(48, 156, 89, 38);
-		desktopPane_6.add(btnNewButton_4);
-		btnNewButton_4.setBackground(new Color(204, 102, 0));
-		btn.setEnabled(false);
+		JButton btnmark1 = new JButton("Mark");
+		btnmark1.setBounds(48, 156, 89, 38);
+		desktopPane_6.add(btnmark1);
+		btnmark1.setBackground(new Color(204, 102, 0));
+		//btn.setEnabled(false);
 		JButton btnDisplayAttendance = new JButton("Display Attendance");
 		btnDisplayAttendance.setBounds(178, 156, 134, 38);
 		desktopPane_6.add(btnDisplayAttendance);
@@ -2186,16 +2537,16 @@ public class teachDashNew {
 					// model.addRow(new Object[]
 					// {textField.getText(),textField_1.getText(),textField_2.getText()});
 					ResultSet rs = stmt.executeQuery("select * from attendance where date='" + txtDate.getText()
-					+ "' and teacher_id='" + teacherid + "' ");
+							+ "' and teacher_id='" + teacherid + "' ");
 					// java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 
-					// Â  jTextField3.setText(dateFormat.format(date));
+					//   jTextField3.setText(dateFormat.format(date));
 					while (rs.next()) {
 
 						model2.addRow(new Object[] { rs.getString(1), rs.getString(3), rs.getString(6) });
 
 					}
-					// Â  Â 
+					//    
 
 				}
 
@@ -2205,12 +2556,19 @@ public class teachDashNew {
 			}
 		});
 
-		btnNewButton_4.addActionListener(new ActionListener() {
-			
+		if(!(desig.equals("HOD")))
+		{
+			tabbedPane.removeTabAt(5);
+			tabbedPane.removeTabAt(4);
+
+		}
+		btnmark1.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				table.setModel(model);
 				try {
-					btn.setEnabled(false);
+				//	btn.setEnabled(false);
+					count2 = 0;
 					java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 
 					Date d1 = sqlDate;
@@ -2221,7 +2579,12 @@ public class teachDashNew {
 					// Converting the String back to java.util.Date
 					Date dt = sm.parse(strDate);
 					System.out.println("I am " + strDate + "I am txt" + txtDate.getText());
-					if (txtDate.getText().equals(strDate.toString())) {
+					if (txtDate.getText().equals(""))
+					{
+						JOptionPane.showMessageDialog(null,"Please select date to continue");
+					}
+					if (Integer.parseInt(txtDate.getText().substring(0,2))<=(Integer.parseInt(strDate.toString().substring(0,2)))) 
+					{
 						System.out.println("I caem here");
 						btn.setEnabled(true);
 
@@ -2233,11 +2596,11 @@ public class teachDashNew {
 				} catch (Exception ee) {
 					System.out.println(ee.getMessage());
 				}
-				count2 = 0;
+				
 				atxtf.setText(txtDate.getText());
 
 				int block = 0;
-				count2++;
+				//count2++;
 				try {
 
 					Class.forName("com.mysql.jdbc.Driver");
@@ -2245,7 +2608,7 @@ public class teachDashNew {
 					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf", "root", "");
 					Statement stmt = con.createStatement();
 
-					ResultSet rs = stmt.executeQuery("select * from attendance");
+					ResultSet rs = stmt.executeQuery("{call Proc2()}");
 					while (rs.next()) {
 						if (rs.getString(4).equals(txtDate.getText()) && rs.getString(2).equals(id)) {
 							block = 100;
@@ -2262,8 +2625,8 @@ public class teachDashNew {
 					System.out.println("I also bb");
 					btn.setEnabled(false);
 				} else {
-					
-					
+
+
 				}
 			}
 		});
@@ -2278,6 +2641,7 @@ public class teachDashNew {
 		txtDate.setText(strDate.toString());
 		txtDate2.setText(strDate.toString());
 		JDesktopPane desktopPane_7 = new JDesktopPane();
+		desktopPane_7.setBackground(new Color(102, 153, 153));
 		desktopPane_7.setBounds(20, 389, 1038, 83);
 		atnSPan.add(desktopPane_7);
 		/* ADD EMUDS CALENDER CODE */
@@ -2366,12 +2730,8 @@ public class teachDashNew {
 
 		JLabel lblNewLabel_2 = new JLabel("Emuds - Calender");
 		lblNewLabel_2.setFont(new Font("Snap ITC", Font.PLAIN, 22));
-		lblNewLabel_2.setBounds(25, 25, 223, 36);
+		lblNewLabel_2.setBounds(25, 24, 223, 37);
 		calenderpanel.add(lblNewLabel_2);
-
-		JPanel request = new JPanel();
-		request.setForeground(new Color(204, 51, 102));
-		tabbedPane.addTab("Request Update", null, request, null);
 		// tabbedPane.setForegroundAt(6, new Color(204, 0, 102));
 
 		JPanel pnlchangepass = new JPanel();
@@ -2408,23 +2768,23 @@ public class teachDashNew {
 		desktopPane_6t.setBackground(new Color(204, 204, 255));
 		desktopPane_6t.setBounds(20, 69, 375, 323);
 		atnTPan.add(desktopPane_6t);
-		btn2.setEnabled(false);
-		JButton btnNewButtont = new JButton("Mark");
-		btnNewButtont.setBounds(43, 131, 89, 38);
-		desktopPane_6t.add(btnNewButtont);
+		
+		JButton MarkButton2 = new JButton("Mark");
+		MarkButton2.setBounds(43, 131, 89, 38);
+		desktopPane_6t.add(MarkButton2);
 		///	desktopPane_6t.add(btnNewButtont);
-		btnNewButtont.setBackground(new Color(204, 102, 0));
-		JButton btnDisplayAttendancet = new JButton("Display Attendance");
-		btnDisplayAttendancet.setBounds(170, 131, 134, 38);
-		desktopPane_6t.add(btnDisplayAttendancet);
+		MarkButton2.setBackground(new Color(204, 102, 0));
+		JButton displayButton2 = new JButton("Display Attendance");
+		displayButton2.setBounds(170, 131, 134, 38);
+		desktopPane_6t.add(displayButton2);
 		//desktopPane_6t.add(btnDisplayAttendancet);
-		btnDisplayAttendancet.setBackground(new Color(204, 102, 0));
+		displayButton2.setBackground(new Color(204, 102, 0));
 
-		JLabel label = new JLabel("Attendance for date:");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label.setBounds(671, 14, 141, 30);
-		atnTPan.add(label);
-		btnDisplayAttendancet.addActionListener(new ActionListener() {
+		JLabel label2 = new JLabel("Attendance for date:");
+		label2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label2.setBounds(671, 14, 141, 30);
+		atnTPan.add(label2);
+		displayButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
@@ -2439,16 +2799,16 @@ public class teachDashNew {
 					// model.addRow(new Object[]
 					// {textField.getText(),textField_1.getText(),textField_2.getText()});
 					ResultSet rs = stmt.executeQuery("select * from teacherattendance where date='" + txtDate2.getText()
-					+ "' and Hodid='" + teacherid + "' ");
+							+ "' and Hodid='" + teacherid + "' ");
 					// java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 
-					// Â  jTextField3.setText(dateFormat.format(date));
+					//   jTextField3.setText(dateFormat.format(date));
 					while (rs.next()) {
 
 						model21.addRow(new Object[] { rs.getString(1), rs.getString(3), rs.getString(5) });
 
 					}
-					// Â  Â 
+					//    
 
 				}
 
@@ -2458,12 +2818,13 @@ public class teachDashNew {
 			}
 		});
 		btn2.setEnabled(false);
-		btnNewButtont.addActionListener(new ActionListener() {
+		MarkButton2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				table7.setModel(model6);
+				count2 = 0;
 				try {
-					btn2.setEnabled(false);
+			
 					java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 
 					Date d1 = sqlDate;
@@ -2473,20 +2834,25 @@ public class teachDashNew {
 					String strDate = sm.format(sqlDate);
 					// Converting the String back to java.util.Date
 					Date dt = sm.parse(strDate);
-					System.out.println("I am " + strDate + "I am txt" + txtDate2.getText());
-					if (txtDate2.getText().equals(strDate.toString())) {
-						System.out.println("I caem here");
+					
+					if (txtDate2.getText().equals(""))
+					{
+						JOptionPane.showMessageDialog(null,"Please select date to continue");
+					}
+					if (Integer.parseInt(txtDate2.getText().substring(0,2))<=(Integer.parseInt(strDate.toString().substring(0,2)))) 
+					{
+						
 						btn2.setEnabled(true);
 
 					} else {
 						btn2.setEnabled(false);
-						btnUpdate_2.setEnabled(true);
+						btnUpdate_1.setEnabled(true);
 					}
 
 				} catch (Exception ee) {
 					System.out.println(ee.getMessage());
 				}
-				count2 = 0;
+			
 				atxtf2.setText(txtDate2.getText());
 
 				int block = 0;
@@ -2515,7 +2881,7 @@ public class teachDashNew {
 
 					btn2.setEnabled(false);
 				} else {
-				
+
 				}
 			}
 		});
@@ -2538,7 +2904,7 @@ public class teachDashNew {
 									"");
 							Statement stmt = con.createStatement();
 							String query = "Update teacher set Password='" + newPasswordf.getText()
-							+ "' where teacher_id='" + teacherid + "'";
+									+ "' where teacher_id='" + teacherid + "'";
 							stmt.executeUpdate(query);
 							JOptionPane.showMessageDialog(null,
 									"PasswordUpdated Successfully. Login again to continue");
@@ -2563,7 +2929,7 @@ public class teachDashNew {
 		pnlchangepass.add(btnNewButton_2);
 
 		JLabel lblNewLabel_8 = new JLabel("");
-		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\Reetik\\Desktop\\tenorlogout.gif"));
+		lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\tenorlogout.gif"));
 		lblNewLabel_8.setBounds(418, -88, 231, 252);
 		pnlchangepass.add(lblNewLabel_8);
 
@@ -2589,17 +2955,28 @@ public class teachDashNew {
 		/* HOD ACCESS */
 
 		JDesktopPane desktopPane_3 = new JDesktopPane();
+		desktopPane_3.setBackground(new Color(51, 102, 153));
 		desktopPane_3.setBounds(20, 147, 247, 519);
 		frame.getContentPane().add(desktopPane_3);
+		if(!(desig.equals("HOD")))
+		{
+			JLabel LableDashTop = new JLabel("Prof."+""+teachername);
+			LableDashTop.setFont(new Font("Sylfaen", Font.BOLD, 20));
+			LableDashTop.setBounds(1176, 94, 300, 42);
+			frame.getContentPane().add(LableDashTop);
 
-		JLabel lblNewLabel_11 = new JLabel(teachername);
-		lblNewLabel_11.setFont(new Font("Sylfaen", Font.BOLD, 20));
-		lblNewLabel_11.setBounds(1072, 94, 197, 42);
-		frame.getContentPane().add(lblNewLabel_11);
+		}
+		else
+		{
+			JLabel LableDashTop = new JLabel("Dr."+""+teachername);
+			LableDashTop.setFont(new Font("Sylfaen", Font.BOLD, 20));
+			LableDashTop.setBounds(1176, 94, 197, 42);
+			frame.getContentPane().add(LableDashTop);
 
+		}
 		JLabel lblNewLabel2 = new JLabel("New label");
-		lblNewLabel2.setIcon(new ImageIcon("C:\\Users\\Reetik\\Desktop\\teachdashboard2.jpg"));
-		lblNewLabel2.setBounds(10, 11, 3454, 727);
+		lblNewLabel2.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\teachdashboard2.jpg"));
+		lblNewLabel2.setBounds(10, 11, 3454, 782);
 		frame.getContentPane().add(lblNewLabel2);
 		cmbYear.addActionListener(new cmbYear_Action());
 		mtblCalendar.setColumnCount(7);
@@ -2612,101 +2989,101 @@ public class teachDashNew {
 
 		// Refresh calendar
 		refreshCalendar(realMonth, realYear); // Refresh calendar
-	}
+}
 
-	public static void refreshCalendar(int month, int year) {
-		// Variables
-		String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
-				"October", "November", "December" };
-		int nod, som; // Number Of Days, Start Of Month
+public static void refreshCalendar(int month, int year) {
+	// Variables
+	String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+			"October", "November", "December" };
+	int nod, som; // Number Of Days, Start Of Month
 
-		// Allow/disallow buttons
-		btnPrev.setEnabled(true);
-		btnNext.setEnabled(true);
-		if (month == 0 && year <= realYear - 10) {
-			btnPrev.setEnabled(false);
-		} // Too early
-		if (month == 11 && year >= realYear + 100) {
-			btnNext.setEnabled(false);
-		} // Too late
-		lblMonth.setText(months[month]);
-		cmbYear.setSelectedItem(String.valueOf(year)); // Select the correct year in the combo box
+	// Allow/disallow buttons
+	btnPrev.setEnabled(true);
+	btnNext.setEnabled(true);
+	if (month == 0 && year <= realYear - 10) {
+		btnPrev.setEnabled(false);
+	} // Too early
+	if (month == 11 && year >= realYear + 100) {
+		btnNext.setEnabled(false);
+	} // Too late
+	lblMonth.setText(months[month]);
+	cmbYear.setSelectedItem(String.valueOf(year)); // Select the correct year in the combo box
 
-		// Clear table
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 7; j++) {
-				mtblCalendar.setValueAt(null, i, j);
-			}
-		}
-
-		// Get first day of month and number of days
-		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
-		nod = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
-		som = cal.get(GregorianCalendar.DAY_OF_WEEK);
-
-		// Draw calendar
-		for (int i = 1; i <= nod; i++) {
-			int row = new Integer((i + som - 2) / 7);
-			int column = (i + som - 2) % 7;
-			mtblCalendar.setValueAt(i, row, column);
-		}
-
-		// Apply renderers
-		tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
-	}
-
-	static class tblCalendarRenderer extends DefaultTableCellRenderer {
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
-				int row, int column) {
-			super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-			if (column == 0 || column == 6) { // Week-end
-				setBackground(new Color(255, 220, 220));
-			} else { // Week
-				setBackground(new Color(255, 255, 255));
-			}
-			if (value != null) {
-				if (Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth
-						&& currentYear == realYear) { // Today
-					setBackground(new Color(220, 220, 255));
-				}
-			}
-			setBorder(null);
-			setForeground(Color.black);
-			return this;
+	// Clear table
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 7; j++) {
+			mtblCalendar.setValueAt(null, i, j);
 		}
 	}
 
-	static class btnPrev_Action implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (currentMonth == 0) { // Back one year
-				currentMonth = 11;
-				currentYear -= 1;
-			} else { // Back one month
-				currentMonth -= 1;
+	// Get first day of month and number of days
+	GregorianCalendar cal = new GregorianCalendar(year, month, 1);
+	nod = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+	som = cal.get(GregorianCalendar.DAY_OF_WEEK);
+
+	// Draw calendar
+	for (int i = 1; i <= nod; i++) {
+		int row = new Integer((i + som - 2) / 7);
+		int column = (i + som - 2) % 7;
+		mtblCalendar.setValueAt(i, row, column);
+	}
+
+	// Apply renderers
+	tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
+}
+
+static class tblCalendarRenderer extends DefaultTableCellRenderer {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
+			int row, int column) {
+		super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+		if (column == 0 || column == 6) { // Week-end
+			setBackground(new Color(255, 220, 220));
+		} else { // Week
+			setBackground(new Color(255, 255, 255));
+		}
+		if (value != null) {
+			if (Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth
+					&& currentYear == realYear) { // Today
+				setBackground(new Color(220, 220, 255));
 			}
+		}
+		setBorder(null);
+		setForeground(Color.black);
+		return this;
+	}
+}
+
+static class btnPrev_Action implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+		if (currentMonth == 0) { // Back one year
+			currentMonth = 11;
+			currentYear -= 1;
+		} else { // Back one month
+			currentMonth -= 1;
+		}
+		refreshCalendar(currentMonth, currentYear);
+	}
+}
+
+static class btnNext_Action implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+		if (currentMonth == 11) { // Foward one year
+			currentMonth = 0;
+			currentYear += 1;
+		} else { // Foward one month
+			currentMonth += 1;
+		}
+		refreshCalendar(currentMonth, currentYear);
+	}
+}
+
+static class cmbYear_Action implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+		if (cmbYear.getSelectedItem() != null) {
+			String b = cmbYear.getSelectedItem().toString();
+			currentYear = Integer.parseInt(b);
 			refreshCalendar(currentMonth, currentYear);
 		}
 	}
-
-	static class btnNext_Action implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (currentMonth == 11) { // Foward one year
-				currentMonth = 0;
-				currentYear += 1;
-			} else { // Foward one month
-				currentMonth += 1;
-			}
-			refreshCalendar(currentMonth, currentYear);
-		}
-	}
-
-	static class cmbYear_Action implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (cmbYear.getSelectedItem() != null) {
-				String b = cmbYear.getSelectedItem().toString();
-				currentYear = Integer.parseInt(b);
-				refreshCalendar(currentMonth, currentYear);
-			}
-		}
-	}
+}
 }

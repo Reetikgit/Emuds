@@ -37,6 +37,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JDesktopPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.JSeparator;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.TitledBorder;
 
 
 public class StudentDashNew {
@@ -54,6 +57,7 @@ public class StudentDashNew {
 	private JTable facDetailTab;
 	private JPasswordField currentPasswordf;
 	private JPasswordField newPasswordf;
+	private final JDesktopPane desktopPane_6 = new JDesktopPane();
 
 
 	/**
@@ -90,13 +94,14 @@ public class StudentDashNew {
 	private void initialize() 
 	{
 		frame = new JFrame();
+		frame.setBackground(new Color(255, 255, 255));
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 1373, 729);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.setBounds(new Rectangle(0, 0, 1327, 519));
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -106,8 +111,8 @@ public class StudentDashNew {
 		tabbedPane.setForeground(new Color(255, 51, 102));
 		tabbedPane.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		tabbedPane.setBackground(Color.WHITE);
-		tabbedPane.setFont(new Font("Segoe Print", Font.BOLD, 20));
-		tabbedPane.setBounds(10, 91, 1327, 519);
+		tabbedPane.setFont(new Font("Segoe Print", Font.BOLD, 30));
+		tabbedPane.setBounds(10, 160, 1526, 560);
 		frame.getContentPane().add(tabbedPane);
 
 		try
@@ -185,6 +190,8 @@ public class StudentDashNew {
 			}
 
 			JScrollPane atnSubScroll1 = new JScrollPane();
+			atnSubScroll1.setFont(new Font("Tahoma", Font.PLAIN, 8));
+			atnSubScroll1.setSize(new Dimension(20, 20));
 			atnSubScroll1.setBounds(40, 90, 418, 105);
 			atnPan.add(atnSubScroll1);
 
@@ -216,6 +223,10 @@ public class StudentDashNew {
 			modelAtnSub1.addRow(new Object [] {countDates , countP , countA , atnPerct});
 
 			atnSub1Tab = new JTable(modelAtnSub1);
+			atnSub1Tab.setSelectionForeground(new Color(153, 102, 153));
+			atnSub1Tab.setSelectionBackground(new Color(255, 255, 255));
+			atnSub1Tab.setSize(new Dimension(25, 25));
+			atnSub1Tab.setFont(new Font("Tahoma", Font.BOLD, 15));
 			atnSub1Tab.setBounds(10,10,10,10);
 			atnSubScroll1.setViewportView(atnSub1Tab);
 
@@ -251,6 +262,9 @@ public class StudentDashNew {
 			modelAtnSub2.addRow(new Object [] {countDates , countP , countA , atnPerct});
 
 			atnSub2Tab = new JTable(modelAtnSub2);
+			atnSub2Tab.setFont(new Font("Tahoma", Font.BOLD, 15));
+			atnSub2Tab.setSelectionForeground(new Color(153, 102, 204));
+			atnSub2Tab.setSelectionBackground(new Color(255, 255, 255));
 			atnSubScroll2.setViewportView(atnSub2Tab);
 
 			ResultSet rsStatus3=stmt.executeQuery("select status  FROM attendance where usn = '"+usn+"' and subjectId = '"+subjectName[2]+"' ORDER BY date ASC");
@@ -285,6 +299,7 @@ public class StudentDashNew {
 			modelAtnSub3.addRow(new Object [] {countDates , countP , countA , atnPerct});
 
 			atnSub3Tab = new JTable(modelAtnSub3);
+			atnSub3Tab.setFont(new Font("Tahoma", Font.BOLD, 15));
 			atnSubScroll3.setViewportView(atnSub3Tab);
 		}
 		catch(Exception E)
@@ -293,7 +308,8 @@ public class StudentDashNew {
 		}
 
 		JScrollPane detailedAtnScroll = new JScrollPane();
-		detailedAtnScroll.setBounds(564, 291, 429, 212);
+		detailedAtnScroll.setFont(new Font("Tahoma", Font.BOLD, 15));
+		detailedAtnScroll.setBounds(602, 291, 576, 212);
 		atnPan.add(detailedAtnScroll);
 
 		JButton btnDetailAtnSub1 = new JButton("Detailed Attendance");
@@ -403,127 +419,127 @@ public class StudentDashNew {
 		});
 		btnDetailAtnSub2.setBounds(567, 199, 154, 34);
 		atnPan.add(btnDetailAtnSub2);
-		
+
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		desktopPane.setBackground(new Color(153, 153, 153));
-		desktopPane.setBounds(560, 262, 437, 252);
+		desktopPane.setBounds(485, 262, 744, 265);
 		atnPan.add(desktopPane);
-		
+
 		JLabel lblNewLabel = new JLabel("Detailed View");
-		lblNewLabel.setBounds(161, 0, 108, 25);
+		lblNewLabel.setBounds(353, 0, 108, 25);
 		desktopPane.add(lblNewLabel);
 		lblNewLabel.setBackground(new Color(153, 153, 204));
 		lblNewLabel.setFont(new Font("Sylfaen", Font.PLAIN, 18));
-		
+
 		JDesktopPane desktopPane_1 = new JDesktopPane();
 		desktopPane_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		desktopPane_1.setBackground(new Color(0, 204, 204));
 		desktopPane_1.setBounds(28, 54, 447, 197);
 		atnPan.add(desktopPane_1);
-		
-				JLabel lblSubIdDb1 = new JLabel("<dynamic>");
-				lblSubIdDb1.setBounds(154, 0, 120, 34);
-				desktopPane_1.add(lblSubIdDb1);
-				lblSubIdDb1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				
-							lblSubIdDb1.setText(subjectName[0]);
-						
-								JLabel lblSubIdDb3 = new JLabel("<dynamic>");
-								lblSubIdDb3.setBounds(182, 266, 120, 25);
-								atnPan.add(lblSubIdDb3);
-								lblSubIdDb3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-								lblSubIdDb3.setText(subjectName[2]);
-								
-								JDesktopPane desktopPane_2 = new JDesktopPane();
-								desktopPane_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-								desktopPane_2.setBackground(new Color(255, 153, 102));
-								desktopPane_2.setBounds(28, 262, 447, 197);
-								atnPan.add(desktopPane_2);
-								
-										JButton btnDetailAtnSub3 = new JButton("Detailed Attendance");
-										btnDetailAtnSub3.setBounds(10, 152, 154, 34);
-										desktopPane_2.add(btnDetailAtnSub3);
-										btnDetailAtnSub3.setBackground(Color.WHITE);
-										
-										JDesktopPane desktopPane_3 = new JDesktopPane();
-										desktopPane_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-										desktopPane_3.setBackground(new Color(204, 204, 102));
-										desktopPane_3.setBounds(550, 54, 459, 197);
-										atnPan.add(desktopPane_3);
-										
-										JLabel label_1 = new JLabel((String) null);
-										label_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-										label_1.setBounds(154, 0, 120, 34);
-										desktopPane_3.add(label_1);
-										
-												JLabel lblSubIdDb2 = new JLabel("<dynamic>");
-												lblSubIdDb2.setBounds(173, 0, 120, 34);
-												desktopPane_3.add(lblSubIdDb2);
-												lblSubIdDb2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-												lblSubIdDb2.setText(subjectName[1]);
-												
-												JLabel lblNewLabel_1 = new JLabel("EMUDS-Attendance");
-												lblNewLabel_1.setFont(new Font("Segoe Script", Font.BOLD, 20));
-												lblNewLabel_1.setBounds(28, 11, 237, 25);
-												atnPan.add(lblNewLabel_1);
-						btnDetailAtnSub3.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent arg0) 
-							{
-								try
-								{
 
-									Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
+		JLabel lblSubIdDb1 = new JLabel("<dynamic>");
+		lblSubIdDb1.setBounds(154, 0, 120, 34);
+		desktopPane_1.add(lblSubIdDb1);
+		lblSubIdDb1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-									Statement stmt=con.createStatement();
+		lblSubIdDb1.setText(subjectName[0]);
 
-									DefaultTableModel modelAtnDetail = new DefaultTableModel();
+		JLabel lblSubIdDb3 = new JLabel("<dynamic>");
+		lblSubIdDb3.setBounds(182, 266, 120, 25);
+		atnPan.add(lblSubIdDb3);
+		lblSubIdDb3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubIdDb3.setText(subjectName[2]);
 
-									modelAtnDetail.addColumn("Date");
-									modelAtnDetail.addColumn("Class Done");
-									modelAtnDetail.addColumn("Status");
-									modelAtnDetail.addColumn("Class Attended");
-									modelAtnDetail.addColumn("Class Missed");
-									modelAtnDetail.addColumn("Percentage");
+		JDesktopPane desktopPane_2 = new JDesktopPane();
+		desktopPane_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		desktopPane_2.setBackground(new Color(255, 153, 102));
+		desktopPane_2.setBounds(28, 262, 447, 197);
+		atnPan.add(desktopPane_2);
 
-									int countClass = 0;
-									int countClassP = 0;
-									int countClassA = 0;
-									float atnPerct = 0;
+		JButton btnDetailAtnSub3 = new JButton("Detailed Attendance");
+		btnDetailAtnSub3.setBounds(10, 152, 154, 34);
+		desktopPane_2.add(btnDetailAtnSub3);
+		btnDetailAtnSub3.setBackground(Color.WHITE);
 
-									ResultSet rs=stmt.executeQuery("select date , status  FROM attendance where usn = '"+usn+"' and subjectId = '"+subjectName[2]+"' ORDER BY date ASC ");
+		JDesktopPane desktopPane_3 = new JDesktopPane();
+		desktopPane_3.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		desktopPane_3.setBackground(Color.ORANGE);
+		desktopPane_3.setBounds(485, 54, 549, 197);
+		atnPan.add(desktopPane_3);
 
-									while(rs.next())
-									{
-										countClass ++;
-										if(rs.getString(2).toLowerCase().equals("p"))
-											countClassP++;
-										else
-											countClassA++;
+		JLabel label_1 = new JLabel((String) null);
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_1.setBounds(154, 0, 120, 34);
+		desktopPane_3.add(label_1);
 
-										if(countClass != 0)
-											atnPerct = (float)(countClassP * 100)/countClass;
+		JLabel lblSubIdDb2 = new JLabel("<dynamic>");
+		lblSubIdDb2.setBounds(173, 0, 120, 34);
+		desktopPane_3.add(lblSubIdDb2);
+		lblSubIdDb2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubIdDb2.setText(subjectName[1]);
 
-										modelAtnDetail.addRow(new Object [] {rs.getString(1) ,countClass ,rs.getString(2) ,countClassP ,countClassA ,atnPerct});
-									}
+		JLabel lblNewLabel_1 = new JLabel("EMUDS-Attendance");
+		lblNewLabel_1.setFont(new Font("Segoe Script", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(28, 11, 237, 25);
+		atnPan.add(lblNewLabel_1);
+		btnDetailAtnSub3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try
+				{
 
-									detailedAtnTab = new JTable(modelAtnDetail);
-									detailedAtnScroll.setViewportView(detailedAtnTab);
-								}
-								catch(Exception E)
-								{
-									JOptionPane.showMessageDialog(null, E.getMessage());
-								}
-							}
-						});
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
+
+					Statement stmt=con.createStatement();
+
+					DefaultTableModel modelAtnDetail = new DefaultTableModel();
+
+					modelAtnDetail.addColumn("Date");
+					modelAtnDetail.addColumn("Class Done");
+					modelAtnDetail.addColumn("Status");
+					modelAtnDetail.addColumn("Class Attended");
+					modelAtnDetail.addColumn("Class Missed");
+					modelAtnDetail.addColumn("Percentage");
+
+					int countClass = 0;
+					int countClassP = 0;
+					int countClassA = 0;
+					float atnPerct = 0;
+
+					ResultSet rs=stmt.executeQuery("select date , status  FROM attendance where usn = '"+usn+"' and subjectId = '"+subjectName[2]+"' ORDER BY date ASC ");
+
+					while(rs.next())
+					{
+						countClass ++;
+						if(rs.getString(2).toLowerCase().equals("p"))
+							countClassP++;
+						else
+							countClassA++;
+
+						if(countClass != 0)
+							atnPerct = (float)(countClassP * 100)/countClass;
+
+						modelAtnDetail.addRow(new Object [] {rs.getString(1) ,countClass ,rs.getString(2) ,countClassP ,countClassA ,atnPerct});
+					}
+
+					detailedAtnTab = new JTable(modelAtnDetail);
+					detailedAtnScroll.setViewportView(detailedAtnTab);
+				}
+				catch(Exception E)
+				{
+					JOptionPane.showMessageDialog(null, E.getMessage());
+				}
+			}
+		});
 
 		JPanel marksPan = new JPanel();
-		marksPan.setBackground(new Color(100, 149, 237,50));
+		marksPan.setBackground(Color.WHITE);
 		tabbedPane.addTab("Marks", null, marksPan, null);
 		marksPan.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 82, 836, 402);
+		scrollPane.setBounds(70, 126, 836, 379);
 		marksPan.add(scrollPane);
 		try
 		{
@@ -604,124 +620,47 @@ public class StudentDashNew {
 			}
 
 			marksTable = new JTable(modelMarks);
+			marksTable.setBackground(new Color(204, 204, 204));
+			marksTable.setSize(new Dimension(20, 20));
+			marksTable.setFont(new Font("Tahoma", Font.BOLD, 20));
+			marksTable.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null), new EtchedBorder(EtchedBorder.LOWERED, null, null)));
 			marksTable.setModel(modelMarks);
 			marksTable.setRowHeight(30);
 			marksTable.setBounds(383, 72, 381, 199);
 
 			scrollPane.setViewportView(marksTable);
 
+			JLabel lblNewLabel_4 = new JLabel("EMUDS-Marks Panel");
+			lblNewLabel_4.setFont(new Font("Papyrus", Font.BOLD, 40));
+			lblNewLabel_4.setBounds(22, 21, 562, 43);
+			marksPan.add(lblNewLabel_4);
+
+			JDesktopPane desktopPane_4 = new JDesktopPane();
+			desktopPane_4.setBackground(new Color(204, 153, 51));
+			desktopPane_4.setBounds(49, 100, 873, 422);
+			marksPan.add(desktopPane_4);
+
+			JSeparator separator = new JSeparator();
+			separator.setBounds(22, 75, 836, 14);
+			marksPan.add(separator);
+
+			JDesktopPane desktopPane_5 = new JDesktopPane();
+			desktopPane_5.setBackground(new Color(153, 102, 153));
+			desktopPane_5.setBounds(965, 161, 228, 200);
+			marksPan.add(desktopPane_5);
+
 			JLabel lblBaBelow = new JLabel("B.A = Below Average");
-			lblBaBelow.setBounds(920, 83, 118, 14);
-			marksPan.add(lblBaBelow);
+			lblBaBelow.setBounds(29, 59, 143, 25);
+			desktopPane_5.add(lblBaBelow);
+			lblBaBelow.setFont(new Font("Sylfaen", Font.PLAIN, 15));
 
 			JLabel lblAaAbove = new JLabel("A.A = Above Average");
-			lblAaAbove.setBounds(920, 118, 118, 14);
-			marksPan.add(lblAaAbove);
-
-			JPanel profilePan = new JPanel();
-			profilePan.setBackground(new Color(100, 149, 237,50));
-			tabbedPane.addTab("Profile", null, profilePan, null);
-			profilePan.setLayout(null);
-
-			JLabel lblName = new JLabel("Name :");
-			lblName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblName.setBounds(10, 92, 87, 51);
-			profilePan.add(lblName);
-
-			JLabel lblUsn = new JLabel("USN :");
-			lblUsn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblUsn.setBounds(10, 154, 87, 51);
-			profilePan.add(lblUsn);
-
-			JLabel lblClasId = new JLabel("Class Id :");
-			lblClasId.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblClasId.setBounds(10, 216, 87, 51);
-			profilePan.add(lblClasId);
-
-			JLabel lblDept = new JLabel("Dept. :");
-			lblDept.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblDept.setBounds(10, 278, 87, 51);
-			profilePan.add(lblDept);
-
-			JLabel lblYear = new JLabel("Year :");
-			lblYear.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblYear.setBounds(494, 154, 131, 51);
-			profilePan.add(lblYear);
-
-			JLabel lblPhone = new JLabel("Phone No :");
-			lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblPhone.setBounds(494, 216, 131, 51);
-			profilePan.add(lblPhone);
-
-			JLabel lblEmail = new JLabel("Email ID :");
-			lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblEmail.setBounds(494, 278, 131, 51);
-			profilePan.add(lblEmail);
-
-			JLabel lblDob = new JLabel("DOB :");
-			lblDob.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblDob.setBounds(494, 92, 87, 51);
-			profilePan.add(lblDob);
-
-			JLabel lblProctor = new JLabel("Proctor :");
-			lblProctor.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblProctor.setBounds(10, 342, 87, 51);
-			profilePan.add(lblProctor);
-
-			JLabel lblNameDb = new JLabel("<dynamic>");
-			lblNameDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblNameDb.setBounds(107, 99, 377, 45);
-			profilePan.add(lblNameDb);
-
-			JLabel lblDeptDb = new JLabel("<dynamic>");
-			lblDeptDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblDeptDb.setBounds(107, 284, 377, 45);
-			profilePan.add(lblDeptDb);
-
-			JLabel lblClassIdDb = new JLabel("<dynamic>");
-			lblClassIdDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblClassIdDb.setBounds(107, 222, 377, 45);
-			profilePan.add(lblClassIdDb);
-
-			JLabel lblUsnDb = new JLabel(usn);
-			lblUsnDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblUsnDb.setBounds(107, 160, 377, 45);
-			profilePan.add(lblUsnDb);
-
-			JLabel lblEmailDb = new JLabel("<dynamic>");
-			lblEmailDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblEmailDb.setBounds(618, 281, 305, 45);
-			profilePan.add(lblEmailDb);
-
-			JLabel lblPhoneDb = new JLabel("<dynamic>");
-			lblPhoneDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblPhoneDb.setBounds(618, 222, 305, 45);
-			profilePan.add(lblPhoneDb);
-
-			JLabel lblYearDb = new JLabel("<dynamic>");
-			lblYearDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblYearDb.setBounds(618, 160, 305, 45);
-			profilePan.add(lblYearDb);
-
-			JLabel lblDobDb = new JLabel("<dynamic>");
-			lblDobDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblDobDb.setBounds(607, 92, 316, 45);
-			profilePan.add(lblDobDb);
-
-			JLabel lblProctorDb = new JLabel("<dynamic>");
-			lblProctorDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
-			lblProctorDb.setBounds(107, 348, 377, 45);
-			profilePan.add(lblProctorDb);
-
-			lblNameDb.setText(name);
-			lblDeptDb.setText(branchId);
-			lblClassIdDb.setText(classId);
-			lblUsnDb.setText(usn);
-			lblEmailDb.setText(email);
-			lblPhoneDb.setText(phoneNo);
-			lblYearDb.setText(year);
-			lblDobDb.setText(dob);
-			lblProctorDb.setText(teacherName);
+			lblAaAbove.setBounds(29, 118, 143, 25);
+			desktopPane_5.add(lblAaAbove);
+			lblAaAbove.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+			desktopPane_6.setBackground(new Color(255, 255, 255));
+			desktopPane_6.setBounds(10, 22, 208, 156);
+			desktopPane_5.add(desktopPane_6);
 
 		}
 		catch(Exception e)
@@ -730,12 +669,12 @@ public class StudentDashNew {
 		}
 
 		JPanel facDetailPan = new JPanel();
-		facDetailPan.setBackground(new Color(100, 149, 237,50));
+		facDetailPan.setBackground(new Color(255, 255, 255));
 		tabbedPane.addTab("Faculty Details", null, facDetailPan, null);
 		facDetailPan.setLayout(null);
 
 		JScrollPane facDetailScroll = new JScrollPane();
-		facDetailScroll.setBounds(72, 74, 686, 338);
+		facDetailScroll.setBounds(89, 116, 1078, 382);
 		facDetailPan.add(facDetailScroll);
 
 		try
@@ -772,16 +711,215 @@ public class StudentDashNew {
 			}
 
 			facDetailTab = new JTable(modelFacDetail);
+			facDetailTab.setFont(new Font("Sylfaen", Font.PLAIN, 18));
+			facDetailTab.setBackground(new Color(255, 204, 153));
 			facDetailTab.setRowHeight(50);
 			facDetailScroll.setViewportView(facDetailTab);
+
+			JLabel lblEmudsfacultyDetials = new JLabel("EMUDS-Faculty Detials");
+			lblEmudsfacultyDetials.setFont(new Font("Papyrus", Font.BOLD, 40));
+			lblEmudsfacultyDetials.setBounds(10, 11, 562, 53);
+			facDetailPan.add(lblEmudsfacultyDetials);
+
+			JSeparator separator = new JSeparator();
+			separator.setBounds(20, 82, 1, 2);
+			facDetailPan.add(separator);
+
+			JSeparator separator_1 = new JSeparator();
+			separator_1.setBounds(20, 69, 850, 15);
+			facDetailPan.add(separator_1);
+
+			JDesktopPane desktopPane_4 = new JDesktopPane();
+			desktopPane_4.setBackground(new Color(0, 0, 102));
+			desktopPane_4.setBounds(53, 82, 1153, 444);
+			facDetailPan.add(desktopPane_4);
 		}
 		catch(Exception E)
 		{
 			JOptionPane.showMessageDialog(null, E.getMessage());
 		}
 
+		JButton btnlogout = new JButton("Click here to  ->Logout");
+		btnlogout.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		btnlogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int inputt = JOptionPane.showConfirmDialog(null,"Are you sure you want to Logout?");
+				if(inputt==0)
+				{
+					Authenticate obj=new Authenticate();
+					obj.main(null);
+					frame.setVisible(false);
+				}
+			}
+		});
+
+		JPanel profilePan = new JPanel();
+		profilePan.setBackground(new Color(255, 255, 255));
+		tabbedPane.addTab("Profile", null, profilePan, null);
+		profilePan.setLayout(null);
+
+		JLabel lblName = new JLabel("Name :");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblName.setBounds(69, 138, 87, 51);
+		profilePan.add(lblName);
+
+		JLabel lblUsn = new JLabel("USN :");
+		lblUsn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblUsn.setBounds(69, 200, 87, 51);
+		profilePan.add(lblUsn);
+
+		JLabel lblClasId = new JLabel("Class Id :");
+		lblClasId.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblClasId.setBounds(69, 262, 87, 51);
+		profilePan.add(lblClasId);
+
+		JLabel lblDept = new JLabel("Dept. :");
+		lblDept.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDept.setBounds(69, 324, 87, 51);
+		profilePan.add(lblDept);
+
+		JLabel lblYear = new JLabel("Year :");
+		lblYear.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblYear.setBounds(553, 200, 131, 51);
+		profilePan.add(lblYear);
+
+		JLabel lblPhone = new JLabel("Phone No :");
+		lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPhone.setBounds(553, 262, 131, 51);
+		profilePan.add(lblPhone);
+
+		JLabel lblEmail = new JLabel("Email ID :");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblEmail.setBounds(553, 324, 131, 51);
+		profilePan.add(lblEmail);
+
+		JLabel lblDob = new JLabel("DOB :");
+		lblDob.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDob.setBounds(553, 138, 87, 51);
+		profilePan.add(lblDob);
+
+		JLabel lblProctor = new JLabel("Proctor :");
+		lblProctor.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblProctor.setBounds(69, 388, 87, 51);
+		profilePan.add(lblProctor);
+
+		JLabel lblNameDb = new JLabel("<dynamic>");
+		lblNameDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblNameDb.setBounds(166, 145, 377, 45);
+		profilePan.add(lblNameDb);
+
+		JLabel lblDeptDb = new JLabel("<dynamic>");
+		lblDeptDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblDeptDb.setBounds(166, 330, 377, 45);
+		profilePan.add(lblDeptDb);
+
+		JLabel lblClassIdDb = new JLabel("<dynamic>");
+		lblClassIdDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblClassIdDb.setBounds(166, 268, 377, 45);
+		profilePan.add(lblClassIdDb);
+
+		JLabel lblUsnDb = new JLabel(usn);
+		lblUsnDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblUsnDb.setBounds(166, 206, 377, 45);
+		profilePan.add(lblUsnDb);
+
+		JLabel lblProctorDb = new JLabel("<dynamic>");
+		lblProctorDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		lblProctorDb.setBounds(166, 394, 377, 45);
+		profilePan.add(lblProctorDb);
+
+		lblNameDb.setText(name);
+		lblDeptDb.setText(branchId);
+		lblClassIdDb.setText(classId);
+		lblUsnDb.setText(usn);
+		lblProctorDb.setText(teacherName);
+
+		JLabel lblNewLabel_8 = new JLabel("EMUDS-Your Profile");
+		lblNewLabel_8.setFont(new Font("Papyrus", Font.BOLD, 40));
+		lblNewLabel_8.setBounds(10, 11, 506, 45);
+		profilePan.add(lblNewLabel_8);
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 67, 718, 12);
+		profilePan.add(separator_1);
+
+		JDesktopPane desktopPane_4 = new JDesktopPane();
+		desktopPane_4.setBackground(new Color(0, 204, 255));
+		desktopPane_4.setBounds(20, 82, 1003, 401);
+		profilePan.add(desktopPane_4);
+
+		JDesktopPane desktopPane_5 = new JDesktopPane();
+		desktopPane_5.setBackground(new Color(255, 255, 255));
+		desktopPane_5.setBounds(35, 60, 475, 50);
+		desktopPane_4.add(desktopPane_5);
+
+		JDesktopPane desktopPane_7 = new JDesktopPane();
+		desktopPane_7.setBackground(Color.WHITE);
+		desktopPane_7.setBounds(35, 121, 475, 50);
+		desktopPane_4.add(desktopPane_7);
+
+		JDesktopPane desktopPane_8 = new JDesktopPane();
+		desktopPane_8.setBackground(Color.WHITE);
+		desktopPane_8.setBounds(35, 182, 475, 50);
+		desktopPane_4.add(desktopPane_8);
+
+		JDesktopPane desktopPane_9 = new JDesktopPane();
+		desktopPane_9.setBackground(Color.WHITE);
+		desktopPane_9.setBounds(35, 249, 475, 50);
+		desktopPane_4.add(desktopPane_9);
+
+		JDesktopPane desktopPane_10 = new JDesktopPane();
+		desktopPane_10.setBackground(Color.WHITE);
+		desktopPane_10.setBounds(35, 310, 475, 50);
+		desktopPane_4.add(desktopPane_10);
+
+		JDesktopPane desktopPane_11 = new JDesktopPane();
+		desktopPane_11.setBackground(Color.WHITE);
+		desktopPane_11.setBounds(516, 60, 452, 50);
+		desktopPane_4.add(desktopPane_11);
+		
+				JLabel lblDobDb = new JLabel("<dynamic>");
+				lblDobDb.setBounds(127, 0, 316, 45);
+				desktopPane_11.add(lblDobDb);
+				lblDobDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+				lblDobDb.setText(dob);
+
+		JDesktopPane desktopPane_12 = new JDesktopPane();
+		desktopPane_12.setBackground(Color.WHITE);
+		desktopPane_12.setBounds(516, 121, 452, 50);
+		desktopPane_4.add(desktopPane_12);
+		
+				JLabel lblYearDb = new JLabel("<dynamic>");
+				lblYearDb.setBounds(131, 0, 305, 45);
+				desktopPane_12.add(lblYearDb);
+				lblYearDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+				lblYearDb.setText(year);
+
+		JDesktopPane desktopPane_13 = new JDesktopPane();
+		desktopPane_13.setBackground(Color.WHITE);
+		desktopPane_13.setBounds(516, 182, 452, 50);
+		desktopPane_4.add(desktopPane_13);
+		
+				JLabel lblPhoneDb = new JLabel("<dynamic>");
+				lblPhoneDb.setBounds(121, 0, 305, 45);
+				desktopPane_13.add(lblPhoneDb);
+				lblPhoneDb.setFont(new Font("Tahoma", Font.PLAIN, 21));
+				lblPhoneDb.setText(phoneNo);
+
+		JDesktopPane desktopPane_14 = new JDesktopPane();
+		desktopPane_14.setBackground(Color.WHITE);
+		desktopPane_14.setBounds(516, 249, 452, 50);
+		desktopPane_4.add(desktopPane_14);
+		
+				JLabel lblEmailDb = new JLabel("<dynamic>");
+				lblEmailDb.setBounds(111, 0, 341, 45);
+				desktopPane_14.add(lblEmailDb);
+				lblEmailDb.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				lblEmailDb.setText(email);
+
 		JPanel changePassTab = new JPanel();
-		changePassTab.setBackground(new Color(100, 149, 237,50));
+		changePassTab.setBackground(new Color(255, 255, 255));
 		tabbedPane.addTab("Change Password", null, changePassTab, null);
 		changePassTab.setLayout(null);
 
@@ -855,34 +993,42 @@ public class StudentDashNew {
 				}
 			}
 		});
-		btnNewButton_2.setBackground(new Color(51, 0, 255));
+		btnNewButton_2.setBackground(new Color(102, 204, 255));
 		btnNewButton_2.setBounds(526, 434, 98, 34);
 		changePassTab.add(btnNewButton_2);
-		
-		JButton btnlogout = new JButton("Click here to  ->Logout");
-		btnlogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				int inputt = JOptionPane.showConfirmDialog(null,"Are you sure you want to Logout?");
-				if(inputt==0)
-				{
-				Authenticate obj=new Authenticate();
-				obj.main(null);
-				frame.setVisible(false);
-				}
-			}
-		});
+
+		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\tenorlogout.gif"));
+		lblNewLabel_5.setBounds(441, 11, 207, 60);
+		changePassTab.add(lblNewLabel_5);
 		btnlogout.setBackground(new Color(204, 102, 153));
 		btnlogout.setFont(new Font("Snap ITC", Font.PLAIN, 40));
 		tabbedPane.addTab("Logout", null, btnlogout, null);
 		tabbedPane.setForegroundAt(5, new Color(204, 0, 102));
 
-		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\studenttext.gif"));
+		lblNewLabel_2.setBounds(1059, 23, 477, 53);
+		frame.getContentPane().add(lblNewLabel_2);
+
+		JLabel lblNewLabel_3 = new JLabel("EMUDS");
+		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setFont(new Font("Segoe Script", Font.BOLD, 55));
+		lblNewLabel_3.setBounds(20, 33, 345, 53);
+		frame.getContentPane().add(lblNewLabel_3);
+
+		JLabel lblNewLabel_9 = new JLabel(name);
+		lblNewLabel_9.setForeground(new Color(255, 255, 255));
+		lblNewLabel_9.setFont(new Font("Sylfaen", Font.BOLD, 23));
+		lblNewLabel_9.setBounds(1159, 114, 232, 35);
+		frame.getContentPane().add(lblNewLabel_9);
+
+
 
 		JLabel label = new JLabel("");
-		label.setBounds(0, 0, 1357, 706);
+		label.setBounds(0, 0, 1536, 799);
 		frame.getContentPane().add(label);
-		label.setIcon(new ImageIcon("C:\\Users\\Reetik\\Desktop\\studentbackgg2.jpg"));
+		label.setIcon(new ImageIcon("C:\\Users\\Imran\\Documents\\Emuds Contents\\studentbackgg2.jpg"));
 
 	}
 }
